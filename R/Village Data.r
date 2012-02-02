@@ -22,6 +22,8 @@ villGood[, c("LongDeg", "LongMin")] <- ldply(stringr::str_split(string=villGood$
 # combine into one decimal measure
 villGood <- transform(villGood, Latitude=LatDeg + LatMin/60, Longitude=LongDeg + LongMin/60)
 
+save(villGood, file="C:/users/Jared/week2/data/villGood.rdata")
+
 # get bounded box for map
 boundBox <- qbbox(lat=villGood$Latitude, lon=villGood$Longitude, TYPE="all", margin=list(m=rep(0,4), TYPE = c("perc", "abs")[1]))
 
