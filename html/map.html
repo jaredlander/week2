@@ -16,6 +16,7 @@ var geocoder;
 var theCenter;
 var dumpString;
 var locArray;
+var locName;
 var globalLocCount;
 var markers;
 var pinShadow, pinYellow, pinBlue, pinRed, pinGreen, pinViolet;
@@ -31,6 +32,7 @@ function mapInit(results, status)
 function initialize() {
     markers = new Array();
     locArray = new Array();
+    locName = new Array();
     dumpString = "";
     geocoder = new google.maps.Geocoder();
     geocoder.geocode( { 'address' : 'myanmar' }, mapInit );
@@ -96,15 +98,15 @@ function putDot(result, status)
 {
     if (status == google.maps.GeocoderStatus.OK)
     {
-	dumpString +=  result[0].geometry.location + " --- " + result[0].formatted_address + "\n";
-	var marker = new google.maps.Marker({
-	    map: map, 
-	    position: result[0].geometry.location
-	});
+        dumpString +=  result[0].geometry.location + " --- " + result[0].formatted_address + "\n";
+        var marker = new google.maps.Marker({
+            map: map, 
+            position: result[0].geometry.location
+        });
     }
     else
     {
-	alert("failed to decode: " + status + " count = " + globalLocCount);
+        alert("failed to decode: " + status + " count = " + globalLocCount);
     }
 }
 
@@ -112,6 +114,7 @@ function putDot(result, status)
 function dumpAll()
 {
     initData();
+    initData2();
     //alert("hi");
     for (var i = 0; i < locArray.length; i++)
     {
@@ -124,8 +127,9 @@ function dumpAll()
         markers[i].setOptions({
             map: map,
             position: pos,
-                icon: pinBlue,
-                shadow: pinShadow
+            icon: pinBlue,
+            shadow: pinShadow,
+            title: locName[i].toString()
         });
         markers[i].setVisible(true);
         //markers[i].setShadow(null);
@@ -380,7 +384,239 @@ function initData()
     locArray[110] =  { 'longitude' : 96.3445, 'latitude' : 16.75917 };
     locArray[111] =  { 'longitude' : 96.49867, 'latitude' : 16.66183 };
     locArray[112] =  { 'longitude' : 96.1945, 'latitude' : 16.9355 };
+}
 
+function initData2()
+{
+    locName[0] = 1951;
+    locName[1] = 1085;
+    locName[2] = 1052;
+    locName[3] = 527;
+    locName[4] = 2904;
+    locName[5] = 5606;
+    locName[6] = 625;
+    locName[7] = 7216;
+    locName[8] = 653;
+    locName[9] = 5385;
+    locName[10] = 1966;
+    locName[11] = 2085;
+    locName[12] = 4921;
+    locName[13] = 1795;
+    locName[14] = 1050;
+    locName[15] = 7736;
+    locName[16] = 7291;
+    locName[17] = 2033;
+    locName[18] = 7058;
+    locName[19] = 823;
+    locName[20] = 331;
+    locName[21] = 1518;
+    locName[22] = 959;
+    locName[23] = 577;
+    locName[24] = 823;
+    locName[25] = 911;
+    locName[26] = 855;
+    locName[27] = 5028;
+    locName[28] = 1099;
+    locName[29] = 723;
+    locName[30] = 732;
+    locName[31] = 1861;
+    locName[32] = 5106;
+    locName[33] = 2084;
+    locName[34] = 6127;
+    locName[35] = 1065;
+    locName[36] = 5825;
+    locName[37] = 5805;
+    locName[38] = 169;
+    locName[39] = 747;
+    locName[40] = 1212;
+    locName[41] = 5678;
+    locName[42] = 0;
+    locName[43] = 6116;
+    locName[44] = 3603;
+    locName[45] = 1331;
+    locName[46] = 1194;
+    locName[47] = 5296;
+    locName[48] = 655;
+    locName[49] = 6037;
+    locName[50] = 413;
+    locName[51] = 6236;
+    locName[52] = 7093;
+    locName[53] = 95;
+    locName[54] = 330;
+    locName[55] = 339;
+    locName[56] = 0;
+    locName[57] = 1613;
+    locName[58] = 178;
+    locName[59] = 2493;
+    locName[60] = 3242;
+    locName[61] = 2498;
+    locName[62] = 1802;
+    locName[63] = 2415;
+    locName[64] = 5873;
+    locName[65] = 5857;
+    locName[66] = 5862;
+    locName[67] = 224;
+    locName[68] = 6196;
+    locName[69] = 629;
+    locName[70] = 7014;
+    locName[71] = 1085;
+    locName[72] = 403;
+    locName[73] = 1081;
+    locName[74] = 106;
+    locName[75] = 4163;
+    locName[76] = 5900;
+    locName[77] = 4986;
+    locName[78] = 5851;
+    locName[79] = 522;
+    locName[80] = 1792;
+    locName[81] = 1871;
+    locName[82] = 5510;
+    locName[83] = 1762;
+    locName[84] = 857;
+    locName[85] = 7324;
+    locName[86] = 2419;
+    locName[87] = 1869;
+    locName[88] = 1832;
+    locName[89] = 1726;
+    locName[90] = 1909;
+    locName[91] = 2210;
+    locName[92] = 204;
+    locName[93] = 1750;
+    locName[94] = 5385;
+    locName[95] = 105;
+    locName[96] = 5365;
+    locName[97] = 222;
+    locName[98] = 5357;
+    locName[99] = 3697;
+    locName[100] = 851;
+    locName[101] = 1666;
+    locName[102] = 6213;
+    locName[103] = 7648;
+    locName[104] = 7636;
+    locName[105] = 406;
+    locName[106] = 7711;
+    locName[107] = 1003;
+    locName[108] = 1633;
+    locName[109] = 1680;
+    locName[110] = 1028;
+    locName[111] = 1092;
+    locName[112] = 0;
+
+
+/*    locArray[0] =  { 'longitude' : 95.44117, 'latitude' : 15.93127, 'name' : 1951 };
+    locArray[1] =  { 'longitude' : 96.04767, 'latitude' : 16.74163, 'name' : 1085 };
+    locArray[2] =  { 'longitude' : 94.90347, 'latitude' : 15.75528, 'name' : 1052 };
+    locArray[3] =  { 'longitude' : 96.04283, 'latitude' : 16.91, 'name' : 527 };
+    locArray[4] =  { 'longitude' : 95.3913, 'latitude' : 16.29033, 'name' : 2904 };
+    locArray[5] =  { 'longitude' : 94.68368, 'latitude' : 16.62057, 'name' : 5606 };
+    locArray[6] =  { 'longitude' : 94.74462, 'latitude' : 15.8135, 'name' : 625 };
+    locArray[7] =  { 'longitude' : 95.31477, 'latitude' : 16.19542, 'name' : 7216 };
+    locArray[8] =  { 'longitude' : 94.84085, 'latitude' : 16.0415, 'name' : 653 };
+    locArray[9] =  { 'longitude' : 95.65008, 'latitude' : 16.11022, 'name' : 5385 };
+    locArray[10] =  { 'longitude' : 95.43673, 'latitude' : 16.5653, 'name' : 1966 };
+    locArray[11] =  { 'longitude' : 94.87088, 'latitude' : 15.86797, 'name' : 2085 };
+    locArray[12] =  { 'longitude' : 95.88008, 'latitude' : 16.68678, 'name' : 4921 };
+    locArray[13] =  { 'longitude' : 94.97708, 'latitude' : 15.78435, 'name' : 1795 };
+    locArray[14] =  { 'longitude' : 95.75005, 'latitude' : 16.5614, 'name' : 1050 };
+    locArray[15] =  { 'longitude' : 95.39455, 'latitude' : 15.87563, 'name' : 7736 };
+    locArray[16] =  { 'longitude' : 95.35723, 'latitude' : 15.95067, 'name' : 7291 };
+    locArray[17] =  { 'longitude' : 94.8422, 'latitude' : 16.22402, 'name' : 2033 };
+    locArray[18] =  { 'longitude' : 95.52688, 'latitude' : 16.30802, 'name' : 7058 };
+    locArray[19] =  { 'longitude' : 95.88483, 'latitude' : 17.00083, 'name' : 823 };
+    locArray[20] =  { 'longitude' : 96.05872, 'latitude' : 16.56612, 'name' : 331 };
+    locArray[21] =  { 'longitude' : 95.89408, 'latitude' : 16.38557, 'name' : 1518 };
+    locArray[22] =  { 'longitude' : 95.87343, 'latitude' : 17.19807, 'name' : 959 };
+    locArray[23] =  { 'longitude' : 95.5878, 'latitude' : 16.47545, 'name' : 577 };
+    locArray[24] =  { 'longitude' : 95.4517, 'latitude' : 16.04535, 'name' : 823 };
+    locArray[25] =  { 'longitude' : 96.08183, 'latitude' : 17.0915, 'name' : 911 };
+    locArray[26] =  { 'longitude' : 95.7995, 'latitude' : 17.19883, 'name' : 855 };
+    locArray[27] =  { 'longitude' : 94.83222, 'latitude' : 16.5649, 'name' : 5028 };
+    locArray[28] =  { 'longitude' : 94.69227, 'latitude' : 16.35192, 'name' : 1099 };
+    locArray[29] =  { 'longitude' : 95.01103, 'latitude' : 16.65538, 'name' : 723 };
+    locArray[30] =  { 'longitude' : 94.96387, 'latitude' : 16.28682, 'name' : 732 };
+    locArray[31] =  { 'longitude' : 94.90185, 'latitude' : 16.48977, 'name' : 1861 };
+    locArray[32] =  { 'longitude' : 94.99297, 'latitude' : 16.46917, 'name' : 5106 };
+    locArray[33] =  { 'longitude' : 94.54467, 'latitude' : 16.23333, 'name' : 2084 };
+    locArray[34] =  { 'longitude' : 95.07883, 'latitude' : 16.10442, 'name' : 6127 };
+    locArray[35] =  { 'longitude' : 94.67213, 'latitude' : 16.12658, 'name' : 1065 };
+    locArray[36] =  { 'longitude' : 94.42135, 'latitude' : 15.87153, 'name' : 5825 };
+    locArray[37] =  { 'longitude' : 95.06248, 'latitude' : 15.9484, 'name' : 5805 };
+    locArray[38] =  { 'longitude' : 96.08258, 'latitude' : 16.99925, 'name' : 169 };
+    locArray[39] =  { 'longitude' : 96.50585, 'latitude' : 16.98453, 'name' : 747 };
+    locArray[40] =  { 'longitude' : 96.71167, 'latitude' : 16.6905, 'name' : 1212 };
+    locArray[41] =  { 'longitude' : 94.99835, 'latitude' : 16.14557, 'name' : 5678 };
+    locArray[42] =  { 'longitude' : 94.69172, 'latitude' : 15.95883, 'name' : NA };
+    locArray[43] =  { 'longitude' : 95.11248, 'latitude' : 16.22168, 'name' : 6116 };
+    locArray[44] =  { 'longitude' : 94.86347, 'latitude' : 16.39498, 'name' : 3603 };
+    locArray[45] =  { 'longitude' : 96.74967, 'latitude' : 16.8305, 'name' : 1331 };
+    locArray[46] =  { 'longitude' : 96.68333, 'latitude' : 16.74517, 'name' : 1194 };
+    locArray[47] =  { 'longitude' : 95.30102, 'latitude' : 16.31305, 'name' : 5296 };
+    locArray[48] =  { 'longitude' : 95.46177, 'latitude' : 16.39717, 'name' : 655 };
+    locArray[49] =  { 'longitude' : 95.2867, 'latitude' : 16.47225, 'name' : 6037 };
+    locArray[50] =  { 'longitude' : 95.58567, 'latitude' : 15.93575, 'name' : 413 };
+    locArray[51] =  { 'longitude' : 95.7378, 'latitude' : 16.73565, 'name' : 6236 };
+    locArray[52] =  { 'longitude' : 95.45978, 'latitude' : 15.82262, 'name' : 7093 };
+    locArray[53] =  { 'longitude' : 96.50928, 'latitude' : 16.8299, 'name' : 95 };
+    locArray[54] =  { 'longitude' : 96.64617, 'latitude' : 16.89583, 'name' : 330 };
+    locArray[55] =  { 'longitude' : 96.71167, 'latitude' : 16.95667, 'name' : 339 };
+    locArray[56] =  { 'longitude' : 96.1935, 'latitude' : 16.82733, 'name' : NA };
+    locArray[57] =  { 'longitude' : 94.421, 'latitude' : 16.30883, 'name' : 1613 };
+    locArray[58] =  { 'longitude' : 94.22515, 'latitude' : 16.21392, 'name' : 178 };
+    locArray[59] =  { 'longitude' : 94.32752, 'latitude' : 16.5046, 'name' : 2493 };
+    locArray[60] =  { 'longitude' : 94.56945, 'latitude' : 16.05838, 'name' : 3242 };
+    locArray[61] =  { 'longitude' : 94.25135, 'latitude' : 16.39598, 'name' : 2498 };
+    locArray[62] =  { 'longitude' : 94.26812, 'latitude' : 16.53647, 'name' : 1802 };
+    locArray[63] =  { 'longitude' : 94.64627, 'latitude' : 16.48805, 'name' : 2415 };
+    locArray[64] =  { 'longitude' : 94.4265, 'latitude' : 16.133, 'name' : 5873 };
+    locArray[65] =  { 'longitude' : 94.25547, 'latitude' : 15.9719, 'name' : 5857 };
+    locArray[66] =  { 'longitude' : 94.21025, 'latitude' : 16.02288, 'name' : 5862 };
+    locArray[67] =  { 'longitude' : 95.60397, 'latitude' : 16.65982, 'name' : 224 };
+    locArray[68] =  { 'longitude' : 95.63685, 'latitude' : 16.83417, 'name' : 6196 };
+    locArray[69] =  { 'longitude' : 95.71162, 'latitude' : 16.87603, 'name' : 629 };
+    locArray[70] =  { 'longitude' : 95.61642, 'latitude' : 16.14133, 'name' : 7014 };
+    locArray[71] =  { 'longitude' : 96.44617, 'latitude' : 16.5133, 'name' : 1085 };
+    locArray[72] =  { 'longitude' : 96.64983, 'latitude' : 16.59533, 'name' : 403 };
+    locArray[73] =  { 'longitude' : 96.334, 'latitude' : 16.55967, 'name' : 1081 };
+    locArray[74] =  { 'longitude' : 95.12668, 'latitude' : 15.80298, 'name' : 106 };
+    locArray[75] =  { 'longitude' : 95.46913, 'latitude' : 15.77008, 'name' : 4163 };
+    locArray[76] =  { 'longitude' : 95.30778, 'latitude' : 15.81057, 'name' : 5900 };
+    locArray[77] =  { 'longitude' : 95.86103, 'latitude' : 16.31958, 'name' : 4986 };
+    locArray[78] =  { 'longitude' : 94.49917, 'latitude' : 17.10892, 'name' : 5851 };
+    locArray[79] =  { 'longitude' : 94.56857, 'latitude' : 16.43372, 'name' : 522 };
+    locArray[80] =  { 'longitude' : 94.55992, 'latitude' : 16.72778, 'name' : 1792 };
+    locArray[81] =  { 'longitude' : 94.47898, 'latitude' : 17.14378, 'name' : 1871 };
+    locArray[82] =  { 'longitude' : 95.2834, 'latitude' : 15.72387, 'name' : 5510 };
+    locArray[83] =  { 'longitude' : 94.65745, 'latitude' : 16.66005, 'name' : 1762 };
+    locArray[84] =  { 'longitude' : 94.3702, 'latitude' : 16.67192, 'name' : 857 };
+    locArray[85] =  { 'longitude' : 95.20242, 'latitude' : 15.86863, 'name' : 7324 };
+    locArray[86] =  { 'longitude' : 94.5994, 'latitude' : 16.56513, 'name' : 2419 };
+    locArray[87] =  { 'longitude' : 94.45, 'latitude' : 16.96067, 'name' : 1869 };
+    locArray[88] =  { 'longitude' : 94.7363, 'latitude' : 16.90023, 'name' : 1832 };
+    locArray[89] =  { 'longitude' : 94.61237, 'latitude' : 16.92722, 'name' : 1726 };
+    locArray[90] =  { 'longitude' : 94.399, 'latitude' : 16.8805, 'name' : 1909 };
+    locArray[91] =  { 'longitude' : 94.71867, 'latitude' : 16.99575, 'name' : 2210 };
+    locArray[92] =  { 'longitude' : 94.802, 'latitude' : 16.80067, 'name' : 204 };
+    locArray[93] =  { 'longitude' : 94.70437, 'latitude' : 16.82398, 'name' : 1750 };
+    locArray[94] =  { 'longitude' : 95.32065, 'latitude' : 16.63502, 'name' : 5385 };
+    locArray[95] =  { 'longitude' : 96.30917, 'latitude' : 16.4395, 'name' : 105 };
+    locArray[96] =  { 'longitude' : 95.14837, 'latitude' : 16.37942, 'name' : 5365 };
+    locArray[97] =  { 'longitude' : 96.02815, 'latitude' : 16.3974, 'name' : 222 };
+    locArray[98] =  { 'longitude' : 95.29422, 'latitude' : 16.7747, 'name' : 5357 };
+    locArray[99] =  { 'longitude' : 95.45098, 'latitude' : 16.77083, 'name' : 3697 };
+    locArray[100] =  { 'longitude' : 95.12672, 'latitude' : 16.55038, 'name' : 851 };
+    locArray[101] =  { 'longitude' : 96.16733, 'latitude' : 16.34283, 'name' : 1666 };
+    locArray[102] =  { 'longitude' : 95.76888, 'latitude' : 16.56572, 'name' : 6213 };
+    locArray[103] =  { 'longitude' : 95.86888, 'latitude' : 16.2113, 'name' : 7648 };
+    locArray[104] =  { 'longitude' : 96.0026, 'latitude' : 16.24502, 'name' : 7636 };
+    locArray[105] =  { 'longitude' : 95.77685, 'latitude' : 16.77763, 'name' : 406 };
+    locArray[106] =  { 'longitude' : 95.74305, 'latitude' : 16.23547, 'name' : 7711 };
+    locArray[107] =  { 'longitude' : 96.34067, 'latitude' : 16.91517, 'name' : 1003 };
+    locArray[108] =  { 'longitude' : 96.22058, 'latitude' : 16.4864, 'name' : 1633 };
+    locArray[109] =  { 'longitude' : 96.1667, 'latitude' : 16.64867, 'name' : 1680 };
+    locArray[110] =  { 'longitude' : 96.3445, 'latitude' : 16.75917, 'name' : 1028 };
+    locArray[111] =  { 'longitude' : 96.49867, 'latitude' : 16.66183, 'name' : 1092 };
+    locArray[112] =  { 'longitude' : 96.1945, 'latitude' : 16.9355, 'name' : NA };
+*/
 }
 
 </script>

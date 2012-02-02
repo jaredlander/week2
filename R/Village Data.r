@@ -24,5 +24,6 @@ villGood <- transform(villGood, Latitude=LatDeg + LatMin/60, Longitude=LongDeg +
 
 # get bounded box for map
 boundBox <- qbbox(lat=villGood$Latitude, lon=villGood$Longitude, TYPE="all", margin=list(m=rep(0,4), TYPE = c("perc", "abs")[1]))
-http://maps.google.com/maps?q=15.72387+94.21025&hl=en&ll=16.459793,95.229492&spn=1.633044,3.337097&sll=37.0625,-95.677068&sspn=42.987658,106.787109&t=m&z=9
+
+# get map of that area
 deltaMap <- GetMap.bbox(lonR=boundBox$lonR + c(.3, -.5), latR=boundBox$latR + c(.288, -.1), destfile="maps/delta.png")
