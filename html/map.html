@@ -1,19 +1,19 @@
-    <!DOCTYPE html>
-    <html>
+<!DOCTYPE html>
+<html>
     <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-    html { height: 100% }
-body { height: 100%; margin: 0; padding: 0 }
-#map_canvas { height: 100% }
-</style>
-    <script type="text/javascript"
-src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBuWZtGyqS4ynRrw3TxiBGQbHOEHf6J1Io&sensor=true">
-    </script>
-    <script type="text/javascript">
-    var map;
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+            html { height: 100% }
+            body { height: 100%; margin: 0; padding: 0 }
+            #map_canvas { height: 100% }
+        </style>
+        <!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBuWZtGyqS4ynRrw3TxiBGQbHOEHf6J1Io&sensor=true"> -->
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en&v=3">
+        </script>
+<script type="text/javascript">
+var map;
 var geocoder;
-var polandCenter;
+var theCenter;
 var dumpString;
 var locArray;
 var globalLocCount;
@@ -22,7 +22,10 @@ var pinShadow, pinYellow, pinBlue, pinRed, pinGreen, pinViolet;
 
 function mapInit(results, status)
 {
-    polandCenter = results[0].geometry.location;
+    //alert(results[0].geometry.location);
+    //initData();
+    //alert(locArray[0].longitude);
+    theCenter = results[0].geometry.location;
 }
 
 function initialize() {
@@ -30,10 +33,10 @@ function initialize() {
     locArray = new Array();
     dumpString = "";
     geocoder = new google.maps.Geocoder();
-    geocoder.geocode( { 'address' : 'poland' }, mapInit );
+    geocoder.geocode( { 'address' : 'myanmar' }, mapInit );
     var myOptions = {
-	center: new google.maps.LatLng(52, 19.0),
-	zoom: 7,
+	center: new google.maps.LatLng(16, 95),
+	zoom: 9,
 	mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"),
@@ -79,7 +82,7 @@ function clearMap()
     for (var i = 0; i < 300; i++)
     {
 			
-	if (markers[i] != null)
+        if (markers[i] != null)
 			{
 			markers[i].setVisible(false);
 			markers[i].setMap(null);
@@ -109,21 +112,23 @@ function putDot(result, status)
 function dumpAll()
 {
     initData();
+    //alert("hi");
     for (var i = 0; i < locArray.length; i++)
     {
-	var pos = new google.maps.LatLng(locArray[i].longitude, locArray[i].latitude);
-	//console.log("pos = " + pos);
-	if (markers[i] == null)
-	    markers[i] = new google.maps.Marker();
+        var pos = new google.maps.LatLng(locArray[i].latitude, locArray[i].longitude);
+        //console.log("pos = " + pos);
+        //if(i==0 || i==1 || i==2 || i==3) alert(pos);
+        if (markers[i] == null)
+            markers[i] = new google.maps.Marker();
 
-	markers[i].setOptions({
-	    map: map,
-	    position: pos,
-            icon: pinBlue,
-            shadow: pinShadow
-	});
-	markers[i].setVisible(true);
-	//markers[i].setShadow(null);
+        markers[i].setOptions({
+            map: map,
+            position: pos,
+                icon: pinBlue,
+                shadow: pinShadow
+        });
+        markers[i].setVisible(true);
+        //markers[i].setShadow(null);
     }
     
 }
@@ -242,7 +247,7 @@ function changeMap()
     globalLocCount = 0;
     for (var i = 0; i < 280; i++)
     {
-	setTimeout(changeMapDelayed, i*1000);
+        setTimeout(changeMapDelayed, i*1000);
     }
     
 }
@@ -262,287 +267,121 @@ function changeMapDelayed()
 
 function initData()
 {
-    locArray[0] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[1] =  { 'longitude' : 52.247295, 'latitude' : 15.533572 };
-    locArray[2] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[3] =  { 'longitude' : 50.287064, 'latitude' : 21.423811 };
-    locArray[4] =  { 'longitude' : 49.566238, 'latitude' : 22.233833 };
-    locArray[5] =  { 'longitude' : 50.872349, 'latitude' : 20.430471 };
-    locArray[6] =  { 'longitude' : 51.942390, 'latitude' : 15.520820 };
-    locArray[7] =  { 'longitude' : 54.096218, 'latitude' : 22.921648 };
-    locArray[8] =  { 'longitude' : 52.333656, 'latitude' : 20.886986 };
-    locArray[9] =  { 'longitude' : 50.286263, 'latitude' : 19.104078 };
-    locArray[10] =  { 'longitude' : 51.405170, 'latitude' : 19.703024 };
-    locArray[11] =  { 'longitude' : 50.012100, 'latitude' : 20.985840 };
-    locArray[12] =  { 'longitude' : 54.213589, 'latitude' : 21.741631 };
-    locArray[13] =  { 'longitude' : 49.964596, 'latitude' : 20.603188 };
-    locArray[14] =  { 'longitude' : 50.133175, 'latitude' : 19.926239 };
-    locArray[15] =  { 'longitude' : 50.286263, 'latitude' : 19.104078 };
-    locArray[16] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[17] =  { 'longitude' : 54.096218, 'latitude' : 22.921648 };
-    locArray[18] =  { 'longitude' : 53.658688, 'latitude' : 20.396732 };
-    locArray[19] =  { 'longitude' : 50.040947, 'latitude' : 21.999281 };
-    locArray[20] =  { 'longitude' : 52.332031, 'latitude' : 21.335524 };
-    locArray[21] =  { 'longitude' : 52.083164, 'latitude' : 15.625318 };
-    locArray[22] =  { 'longitude' : 53.169281, 'latitude' : 15.419710 };
-    locArray[23] =  { 'longitude' : 51.590637, 'latitude' : 19.132788 };
-    locArray[24] =  { 'longitude' : 52.536366, 'latitude' : 19.775137 };
-    locArray[25] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[26] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[27] =  { 'longitude' : 51.291630, 'latitude' : 22.507759 };
-    locArray[28] =  { 'longitude' : 50.758816, 'latitude' : 17.852978 };
-    locArray[29] =  { 'longitude' : 52.406376, 'latitude' : 16.925169 };
-    locArray[30] =  { 'longitude' : 51.364990, 'latitude' : 17.468410 };
-    locArray[31] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[32] =  { 'longitude' : 50.125141, 'latitude' : 18.381039 };
-    locArray[33] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[34] =  { 'longitude' : 54.358864, 'latitude' : 16.971069 };
-    locArray[35] =  { 'longitude' : 54.096218, 'latitude' : 22.921648 };
-    locArray[36] =  { 'longitude' : 52.080883, 'latitude' : 21.107138 };
-    locArray[37] =  { 'longitude' : 49.691299, 'latitude' : 19.182398 };
-    locArray[38] =  { 'longitude' : 54.096218, 'latitude' : 22.921648 };
-    locArray[39] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[40] =  { 'longitude' : 50.255829, 'latitude' : 18.855570 };
-    locArray[41] =  { 'longitude' : 52.083164, 'latitude' : 15.625318 };
-    locArray[42] =  { 'longitude' : 52.391666, 'latitude' : 16.791681 };
-    locArray[43] =  { 'longitude' : 51.198849, 'latitude' : 22.657364 };
-    locArray[44] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[45] =  { 'longitude' : 49.691299, 'latitude' : 19.182398 };
-    locArray[46] =  { 'longitude' : 50.785049, 'latitude' : 18.962240 };
-    locArray[47] =  { 'longitude' : 51.107883, 'latitude' : 17.038538 };
-    locArray[48] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[49] =  { 'longitude' : 54.096218, 'latitude' : 22.921648 };
-    locArray[50] =  { 'longitude' : 52.130154, 'latitude' : 15.169678 };
-    locArray[51] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[52] =  { 'longitude' : 50.974892, 'latitude' : 16.942732 };
-    locArray[53] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[54] =  { 'longitude' : 51.942390, 'latitude' : 15.520820 };
-    locArray[55] =  { 'longitude' : 50.102173, 'latitude' : 18.546286 };
-    locArray[56] =  { 'longitude' : 50.097115, 'latitude' : 18.209238 };
-    locArray[57] =  { 'longitude' : 50.817387, 'latitude' : 19.118530 };
-    locArray[58] =  { 'longitude' : 51.402725, 'latitude' : 21.147133 };
-    locArray[59] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[60] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[61] =  { 'longitude' : 51.107883, 'latitude' : 17.038538 };
-    locArray[62] =  { 'longitude' : 50.121799, 'latitude' : 19.020002 };
-    locArray[63] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[64] =  { 'longitude' : 52.406376, 'latitude' : 16.925169 };
-    locArray[65] =  { 'longitude' : 50.411903, 'latitude' : 16.742937 };
-    locArray[66] =  { 'longitude' : 50.857548, 'latitude' : 16.321337 };
-    locArray[67] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[68] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[69] =  { 'longitude' : 51.204609, 'latitude' : 17.380777 };
-    locArray[70] =  { 'longitude' : 51.669582, 'latitude' : 16.048735 };
-    locArray[71] =  { 'longitude' : 50.637550, 'latitude' : 17.814964 };
-    locArray[72] =  { 'longitude' : 50.349880, 'latitude' : 18.226185 };
-    locArray[73] =  { 'longitude' : 50.349880, 'latitude' : 18.226185 };
-    locArray[74] =  { 'longitude' : 51.273201, 'latitude' : 15.936480 };
-    locArray[75] =  { 'longitude' : 51.976036, 'latitude' : 17.869015 };
-    locArray[76] =  { 'longitude' : 51.186203, 'latitude' : 20.410337 };
-    locArray[77] =  { 'longitude' : 50.466068, 'latitude' : 17.173361 };
-    locArray[78] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[79] =  { 'longitude' : 50.281315, 'latitude' : 19.565687 };
-    locArray[80] =  { 'longitude' : 51.204609, 'latitude' : 17.380777 };
-    locArray[81] =  { 'longitude' : 53.336475, 'latitude' : 15.050377 };
-    locArray[82] =  { 'longitude' : 54.570782, 'latitude' : 18.387823 };
-    locArray[83] =  { 'longitude' : 51.396851, 'latitude' : 16.220039 };
-    locArray[84] =  { 'longitude' : 53.132488, 'latitude' : 23.168840 };
-    locArray[85] =  { 'longitude' : 50.942410, 'latitude' : 20.283878 };
-    locArray[86] =  { 'longitude' : 53.336475, 'latitude' : 15.050377 };
-    locArray[87] =  { 'longitude' : 51.039532, 'latitude' : 16.969233 };
-    locArray[88] =  { 'longitude' : 52.648331, 'latitude' : 19.067736 };
-    locArray[89] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[90] =  { 'longitude' : 50.972351, 'latitude' : 18.218069 };
-    locArray[91] =  { 'longitude' : 53.080971, 'latitude' : 21.408827 };
-    locArray[92] =  { 'longitude' : 51.246452, 'latitude' : 22.568447 };
-    locArray[93] =  { 'longitude' : 50.518295, 'latitude' : 18.226894 };
-    locArray[94] =  { 'longitude' : 52.783424, 'latitude' : 18.262552 };
-    locArray[95] =  { 'longitude' : 53.778423, 'latitude' : 20.480120 };
-    locArray[96] =  { 'longitude' : 50.696251, 'latitude' : 17.385160 };
-    locArray[97] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[98] =  { 'longitude' : 50.348381, 'latitude' : 18.915718 };
-    locArray[99] =  { 'longitude' : 54.033730, 'latitude' : 22.506943 };
-    locArray[100] =  { 'longitude' : 51.590637, 'latitude' : 19.132788 };
-    locArray[101] =  { 'longitude' : 52.783424, 'latitude' : 18.262552 };
-    locArray[102] =  { 'longitude' : 50.068241, 'latitude' : 22.229799 };
-    locArray[103] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[104] =  { 'longitude' : 51.107883, 'latitude' : 17.038538 };
-    locArray[105] =  { 'longitude' : 50.121799, 'latitude' : 19.020002 };
-    locArray[106] =  { 'longitude' : 50.003136, 'latitude' : 18.471910 };
-    locArray[107] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[108] =  { 'longitude' : 53.828053, 'latitude' : 22.364662 };
-    locArray[109] =  { 'longitude' : 51.107883, 'latitude' : 17.038538 };
-    locArray[110] =  { 'longitude' : 50.318291, 'latitude' : 19.237232 };
-    locArray[111] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[112] =  { 'longitude' : 51.654987, 'latitude' : 17.806826 };
-    locArray[113] =  { 'longitude' : 50.817387, 'latitude' : 19.118530 };
-    locArray[114] =  { 'longitude' : 50.972351, 'latitude' : 18.218069 };
-    locArray[115] =  { 'longitude' : 50.003242, 'latitude' : 19.595985 };
-    locArray[116] =  { 'longitude' : 50.040947, 'latitude' : 21.999281 };
-    locArray[117] =  { 'longitude' : 50.102173, 'latitude' : 18.546286 };
-    locArray[118] =  { 'longitude' : 53.134007, 'latitude' : 22.041355 };
-    locArray[119] =  { 'longitude' : 53.755863, 'latitude' : 19.204535 };
-    locArray[120] =  { 'longitude' : 51.422688, 'latitude' : 21.972176 };
-    locArray[121] =  { 'longitude' : 50.286263, 'latitude' : 19.104078 };
-    locArray[122] =  { 'longitude' : 52.080883, 'latitude' : 21.107138 };
-    locArray[123] =  { 'longitude' : 52.106792, 'latitude' : 19.945374 };
-    locArray[124] =  { 'longitude' : 50.040947, 'latitude' : 21.999281 };
-    locArray[125] =  { 'longitude' : 49.566238, 'latitude' : 22.233833 };
-    locArray[126] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[127] =  { 'longitude' : 50.318291, 'latitude' : 19.237232 };
-    locArray[128] =  { 'longitude' : 53.406158, 'latitude' : 23.503023 };
-    locArray[129] =  { 'longitude' : 52.801411, 'latitude' : 18.085171 };
-    locArray[130] =  { 'longitude' : 50.637550, 'latitude' : 17.814964 };
-    locArray[131] =  { 'longitude' : 54.036404, 'latitude' : 21.766733 };
-    locArray[132] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[133] =  { 'longitude' : 51.706062, 'latitude' : 20.616091 };
-    locArray[134] =  { 'longitude' : 50.179020, 'latitude' : 18.903803 };
-    locArray[135] =  { 'longitude' : 52.675632, 'latitude' : 18.011589 };
-    locArray[136] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[137] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[138] =  { 'longitude' : 49.470119, 'latitude' : 22.330433 };
-    locArray[139] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[140] =  { 'longitude' : 50.474506, 'latitude' : 17.965139 };
-    locArray[141] =  { 'longitude' : 51.422688, 'latitude' : 21.972176 };
-    locArray[142] =  { 'longitude' : 53.132488, 'latitude' : 23.168840 };
-    locArray[143] =  { 'longitude' : 51.527702, 'latitude' : 18.920498 };
-    locArray[144] =  { 'longitude' : 53.132488, 'latitude' : 23.168840 };
-    locArray[145] =  { 'longitude' : 50.348381, 'latitude' : 18.915718 };
-    locArray[146] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[147] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[148] =  { 'longitude' : 50.379391, 'latitude' : 19.758400 };
-    locArray[149] =  { 'longitude' : 51.246452, 'latitude' : 22.568447 };
-    locArray[150] =  { 'longitude' : 50.582600, 'latitude' : 22.053585 };
-    locArray[151] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[152] =  { 'longitude' : 52.732529, 'latitude' : 15.236931 };
-    locArray[153] =  { 'longitude' : 50.442661, 'latitude' : 18.928711 };
-    locArray[154] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[155] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[156] =  { 'longitude' : 50.349880, 'latitude' : 18.226185 };
-    locArray[157] =  { 'longitude' : 53.132488, 'latitude' : 23.168840 };
-    locArray[158] =  { 'longitude' : 50.571133, 'latitude' : 18.155773 };
-    locArray[159] =  { 'longitude' : 53.132488, 'latitude' : 23.168840 };
-    locArray[160] =  { 'longitude' : 53.487766, 'latitude' : 14.395529 };
-    locArray[161] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[162] =  { 'longitude' : 53.132488, 'latitude' : 23.168840 };
-    locArray[163] =  { 'longitude' : 51.107883, 'latitude' : 17.038538 };
-    locArray[164] =  { 'longitude' : 51.890293, 'latitude' : 15.585588 };
-    locArray[165] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[166] =  { 'longitude' : 50.281315, 'latitude' : 19.565687 };
-    locArray[167] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[168] =  { 'longitude' : 49.885075, 'latitude' : 22.100574 };
-    locArray[169] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[170] =  { 'longitude' : 49.368069, 'latitude' : 20.011131 };
-    locArray[171] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[172] =  { 'longitude' : 50.670429, 'latitude' : 17.924438 };
-    locArray[173] =  { 'longitude' : 50.255829, 'latitude' : 18.855570 };
-    locArray[174] =  { 'longitude' : 53.132488, 'latitude' : 23.168840 };
-    locArray[175] =  { 'longitude' : 51.246452, 'latitude' : 22.568447 };
-    locArray[176] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[177] =  { 'longitude' : 51.393539, 'latitude' : 16.207758 };
-    locArray[178] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[179] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[180] =  { 'longitude' : 52.406376, 'latitude' : 16.925169 };
-    locArray[181] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[182] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[183] =  { 'longitude' : 52.406376, 'latitude' : 16.925169 };
-    locArray[184] =  { 'longitude' : 53.778423, 'latitude' : 20.480120 };
-    locArray[185] =  { 'longitude' : 52.346409, 'latitude' : 14.832309 };
-    locArray[186] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[187] =  { 'longitude' : 51.841988, 'latitude' : 16.593754 };
-    locArray[188] =  { 'longitude' : 52.083164, 'latitude' : 15.625318 };
-    locArray[189] =  { 'longitude' : 50.264893, 'latitude' : 19.023781 };
-    locArray[190] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[191] =  { 'longitude' : 51.638077, 'latitude' : 20.545088 };
-    locArray[192] =  { 'longitude' : 50.811520, 'latitude' : 18.860090 };
-    locArray[193] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[194] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[195] =  { 'longitude' : 52.324768, 'latitude' : 17.562582 };
-    locArray[196] =  { 'longitude' : 51.942390, 'latitude' : 15.520820 };
-    locArray[197] =  { 'longitude' : 51.422688, 'latitude' : 21.972176 };
-    locArray[198] =  { 'longitude' : 52.229336, 'latitude' : 20.238359 };
-    locArray[199] =  { 'longitude' : 50.096798, 'latitude' : 19.839939 };
-    locArray[200] =  { 'longitude' : 50.748291, 'latitude' : 17.618799 };
-    locArray[201] =  { 'longitude' : 50.208046, 'latitude' : 19.166052 };
-    locArray[202] =  { 'longitude' : 52.669220, 'latitude' : 15.298354 };
-    locArray[203] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[204] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[205] =  { 'longitude' : 51.107883, 'latitude' : 17.038538 };
-    locArray[206] =  { 'longitude' : 50.239929, 'latitude' : 20.082121 };
-    locArray[207] =  { 'longitude' : 52.406376, 'latitude' : 16.925169 };
-    locArray[208] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[209] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[210] =  { 'longitude' : 53.665157, 'latitude' : 18.867344 };
-    locArray[211] =  { 'longitude' : 52.385834, 'latitude' : 14.790398 };
-    locArray[212] =  { 'longitude' : 52.406376, 'latitude' : 16.925169 };
-    locArray[213] =  { 'longitude' : 51.107883, 'latitude' : 17.038538 };
-    locArray[214] =  { 'longitude' : 51.393539, 'latitude' : 16.207758 };
-    locArray[215] =  { 'longitude' : 51.610363, 'latitude' : 19.534931 };
-    locArray[216] =  { 'longitude' : 52.001602, 'latitude' : 15.538533 };
-    locArray[217] =  { 'longitude' : 53.132488, 'latitude' : 23.168840 };
-    locArray[218] =  { 'longitude' : 50.049129, 'latitude' : 20.537237 };
-    locArray[219] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[220] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[221] =  { 'longitude' : 50.348381, 'latitude' : 18.915718 };
-    locArray[222] =  { 'longitude' : 50.286263, 'latitude' : 19.104078 };
-    locArray[223] =  { 'longitude' : 50.224220, 'latitude' : 18.734360 };
-    locArray[224] =  { 'longitude' : 51.107883, 'latitude' : 17.038538 };
-    locArray[225] =  { 'longitude' : 52.210350, 'latitude' : 20.797232 };
-    locArray[226] =  { 'longitude' : 50.043510, 'latitude' : 21.420216 };
-    locArray[227] =  { 'longitude' : 51.590637, 'latitude' : 19.132788 };
-    locArray[228] =  { 'longitude' : 50.442715, 'latitude' : 16.242661 };
-    locArray[229] =  { 'longitude' : 50.670788, 'latitude' : 17.824892 };
-    locArray[230] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[231] =  { 'longitude' : 50.286263, 'latitude' : 19.104078 };
-    locArray[232] =  { 'longitude' : 51.246452, 'latitude' : 22.568447 };
-    locArray[233] =  { 'longitude' : 53.713505, 'latitude' : 18.932564 };
-    locArray[234] =  { 'longitude' : 50.325600, 'latitude' : 19.125412 };
-    locArray[235] =  { 'longitude' : 50.294491, 'latitude' : 18.671381 };
-    locArray[236] =  { 'longitude' : 52.991295, 'latitude' : 22.884314 };
-    locArray[237] =  { 'longitude' : 52.170471, 'latitude' : 20.811886 };
-    locArray[238] =  { 'longitude' : 51.402725, 'latitude' : 21.147133 };
-    locArray[239] =  { 'longitude' : 53.833687, 'latitude' : 18.360241 };
-    locArray[240] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[241] =  { 'longitude' : 54.352024, 'latitude' : 18.646639 };
-    locArray[242] =  { 'longitude' : 53.132488, 'latitude' : 23.168840 };
-    locArray[243] =  { 'longitude' : 52.170471, 'latitude' : 20.811886 };
-    locArray[244] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[245] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[246] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[247] =  { 'longitude' : 53.302151, 'latitude' : 23.287840 };
-    locArray[248] =  { 'longitude' : 51.574291, 'latitude' : 17.673920 };
-    locArray[249] =  { 'longitude' : 54.599705, 'latitude' : 18.482344 };
-    locArray[250] =  { 'longitude' : 50.296432, 'latitude' : 18.917130 };
-    locArray[251] =  { 'longitude' : 51.766232, 'latitude' : 20.256229 };
-    locArray[252] =  { 'longitude' : 52.438431, 'latitude' : 17.773211 };
-    locArray[253] =  { 'longitude' : 54.358864, 'latitude' : 16.971069 };
-    locArray[254] =  { 'longitude' : 50.264893, 'latitude' : 19.023781 };
-    locArray[255] =  { 'longitude' : 52.229675, 'latitude' : 21.012228 };
-    locArray[256] =  { 'longitude' : 50.294491, 'latitude' : 18.671381 };
-    locArray[257] =  { 'longitude' : 51.731842, 'latitude' : 18.205162 };
-    locArray[258] =  { 'longitude' : 53.864159, 'latitude' : 21.304873 };
-    locArray[259] =  { 'longitude' : 52.081612, 'latitude' : 16.638548 };
-    locArray[260] =  { 'longitude' : 50.582600, 'latitude' : 22.053585 };
-    locArray[261] =  { 'longitude' : 54.253307, 'latitude' : 22.659340 };
-    locArray[262] =  { 'longitude' : 50.817387, 'latitude' : 19.118530 };
-    locArray[263] =  { 'longitude' : 50.192226, 'latitude' : 18.426416 };
-    locArray[264] =  { 'longitude' : 50.064651, 'latitude' : 19.944981 };
-    locArray[265] =  { 'longitude' : 50.297489, 'latitude' : 18.954573 };
-    locArray[266] =  { 'longitude' : 50.582600, 'latitude' : 22.053585 };
-    locArray[267] =  { 'longitude' : 51.759247, 'latitude' : 19.455984 };
-    locArray[268] =  { 'longitude' : 53.849579, 'latitude' : 23.005116 };
-    locArray[269] =  { 'longitude' : 50.574097, 'latitude' : 22.162371 };
-    locArray[270] =  { 'longitude' : 50.097115, 'latitude' : 18.209238 };
-    locArray[271] =  { 'longitude' : 50.412712, 'latitude' : 22.743269 };
-    locArray[272] =  { 'longitude' : 50.520142, 'latitude' : 20.191557 };
-    locArray[273] =  { 'longitude' : 50.474506, 'latitude' : 17.965139 };
-    locArray[274] =  { 'longitude' : 50.662754, 'latitude' : 17.926519 };
-    locArray[275] =  { 'longitude' : 50.264893, 'latitude' : 19.023781 };
-    locArray[276] =  { 'longitude' : 52.006256, 'latitude' : 15.367942 };
-    locArray[277] =  { 'longitude' : 52.732529, 'latitude' : 15.236931 };
-    locArray[278] =  { 'longitude' : 53.428543, 'latitude' : 14.552812 };
-    locArray[279] =  { 'longitude' : 50.267902, 'latitude' : 18.517355 };
+    locArray[0] =  { 'longitude' : 95.44117, 'latitude' : 15.93127 };
+    locArray[1] =  { 'longitude' : 96.04767, 'latitude' : 16.74163 };
+    locArray[2] =  { 'longitude' : 94.90347, 'latitude' : 15.75528 };
+    locArray[3] =  { 'longitude' : 96.04283, 'latitude' : 16.91 };
+    locArray[4] =  { 'longitude' : 95.3913, 'latitude' : 16.29033 };
+    locArray[5] =  { 'longitude' : 94.68368, 'latitude' : 16.62057 };
+    locArray[6] =  { 'longitude' : 94.74462, 'latitude' : 15.8135 };
+    locArray[7] =  { 'longitude' : 95.31477, 'latitude' : 16.19542 };
+    locArray[8] =  { 'longitude' : 94.84085, 'latitude' : 16.0415 };
+    locArray[9] =  { 'longitude' : 95.65008, 'latitude' : 16.11022 };
+    locArray[10] =  { 'longitude' : 95.43673, 'latitude' : 16.5653 };
+    locArray[11] =  { 'longitude' : 94.87088, 'latitude' : 15.86797 };
+    locArray[12] =  { 'longitude' : 95.88008, 'latitude' : 16.68678 };
+    locArray[13] =  { 'longitude' : 94.97708, 'latitude' : 15.78435 };
+    locArray[14] =  { 'longitude' : 95.75005, 'latitude' : 16.5614 };
+    locArray[15] =  { 'longitude' : 95.39455, 'latitude' : 15.87563 };
+    locArray[16] =  { 'longitude' : 95.35723, 'latitude' : 15.95067 };
+    locArray[17] =  { 'longitude' : 94.8422, 'latitude' : 16.22402 };
+    locArray[18] =  { 'longitude' : 95.52688, 'latitude' : 16.30802 };
+    locArray[19] =  { 'longitude' : 95.88483, 'latitude' : 17.00083 };
+    locArray[20] =  { 'longitude' : 96.05872, 'latitude' : 16.56612 };
+    locArray[21] =  { 'longitude' : 95.89408, 'latitude' : 16.38557 };
+    locArray[22] =  { 'longitude' : 95.87343, 'latitude' : 17.19807 };
+    locArray[23] =  { 'longitude' : 95.5878, 'latitude' : 16.47545 };
+    locArray[24] =  { 'longitude' : 95.4517, 'latitude' : 16.04535 };
+    locArray[25] =  { 'longitude' : 96.08183, 'latitude' : 17.0915 };
+    locArray[26] =  { 'longitude' : 95.7995, 'latitude' : 17.19883 };
+    locArray[27] =  { 'longitude' : 94.83222, 'latitude' : 16.5649 };
+    locArray[28] =  { 'longitude' : 94.69227, 'latitude' : 16.35192 };
+    locArray[29] =  { 'longitude' : 95.01103, 'latitude' : 16.65538 };
+    locArray[30] =  { 'longitude' : 94.96387, 'latitude' : 16.28682 };
+    locArray[31] =  { 'longitude' : 94.90185, 'latitude' : 16.48977 };
+    locArray[32] =  { 'longitude' : 94.99297, 'latitude' : 16.46917 };
+    locArray[33] =  { 'longitude' : 94.54467, 'latitude' : 16.23333 };
+    locArray[34] =  { 'longitude' : 95.07883, 'latitude' : 16.10442 };
+    locArray[35] =  { 'longitude' : 94.67213, 'latitude' : 16.12658 };
+    locArray[36] =  { 'longitude' : 94.42135, 'latitude' : 15.87153 };
+    locArray[37] =  { 'longitude' : 95.06248, 'latitude' : 15.9484 };
+    locArray[38] =  { 'longitude' : 96.08258, 'latitude' : 16.99925 };
+    locArray[39] =  { 'longitude' : 96.50585, 'latitude' : 16.98453 };
+    locArray[40] =  { 'longitude' : 96.71167, 'latitude' : 16.6905 };
+    locArray[41] =  { 'longitude' : 94.99835, 'latitude' : 16.14557 };
+    locArray[42] =  { 'longitude' : 94.69172, 'latitude' : 15.95883 };
+    locArray[43] =  { 'longitude' : 95.11248, 'latitude' : 16.22168 };
+    locArray[44] =  { 'longitude' : 94.86347, 'latitude' : 16.39498 };
+    locArray[45] =  { 'longitude' : 96.74967, 'latitude' : 16.8305 };
+    locArray[46] =  { 'longitude' : 96.68333, 'latitude' : 16.74517 };
+    locArray[47] =  { 'longitude' : 95.30102, 'latitude' : 16.31305 };
+    locArray[48] =  { 'longitude' : 95.46177, 'latitude' : 16.39717 };
+    locArray[49] =  { 'longitude' : 95.2867, 'latitude' : 16.47225 };
+    locArray[50] =  { 'longitude' : 95.58567, 'latitude' : 15.93575 };
+    locArray[51] =  { 'longitude' : 95.7378, 'latitude' : 16.73565 };
+    locArray[52] =  { 'longitude' : 95.45978, 'latitude' : 15.82262 };
+    locArray[53] =  { 'longitude' : 96.50928, 'latitude' : 16.8299 };
+    locArray[54] =  { 'longitude' : 96.64617, 'latitude' : 16.89583 };
+    locArray[55] =  { 'longitude' : 96.71167, 'latitude' : 16.95667 };
+    locArray[56] =  { 'longitude' : 96.1935, 'latitude' : 16.82733 };
+    locArray[57] =  { 'longitude' : 94.421, 'latitude' : 16.30883 };
+    locArray[58] =  { 'longitude' : 94.22515, 'latitude' : 16.21392 };
+    locArray[59] =  { 'longitude' : 94.32752, 'latitude' : 16.5046 };
+    locArray[60] =  { 'longitude' : 94.56945, 'latitude' : 16.05838 };
+    locArray[61] =  { 'longitude' : 94.25135, 'latitude' : 16.39598 };
+    locArray[62] =  { 'longitude' : 94.26812, 'latitude' : 16.53647 };
+    locArray[63] =  { 'longitude' : 94.64627, 'latitude' : 16.48805 };
+    locArray[64] =  { 'longitude' : 94.4265, 'latitude' : 16.133 };
+    locArray[65] =  { 'longitude' : 94.25547, 'latitude' : 15.9719 };
+    locArray[66] =  { 'longitude' : 94.21025, 'latitude' : 16.02288 };
+    locArray[67] =  { 'longitude' : 95.60397, 'latitude' : 16.65982 };
+    locArray[68] =  { 'longitude' : 95.63685, 'latitude' : 16.83417 };
+    locArray[69] =  { 'longitude' : 95.71162, 'latitude' : 16.87603 };
+    locArray[70] =  { 'longitude' : 95.61642, 'latitude' : 16.14133 };
+    locArray[71] =  { 'longitude' : 96.44617, 'latitude' : 16.5133 };
+    locArray[72] =  { 'longitude' : 96.64983, 'latitude' : 16.59533 };
+    locArray[73] =  { 'longitude' : 96.334, 'latitude' : 16.55967 };
+    locArray[74] =  { 'longitude' : 95.12668, 'latitude' : 15.80298 };
+    locArray[75] =  { 'longitude' : 95.46913, 'latitude' : 15.77008 };
+    locArray[76] =  { 'longitude' : 95.30778, 'latitude' : 15.81057 };
+    locArray[77] =  { 'longitude' : 95.86103, 'latitude' : 16.31958 };
+    locArray[78] =  { 'longitude' : 94.49917, 'latitude' : 17.10892 };
+    locArray[79] =  { 'longitude' : 94.56857, 'latitude' : 16.43372 };
+    locArray[80] =  { 'longitude' : 94.55992, 'latitude' : 16.72778 };
+    locArray[81] =  { 'longitude' : 94.47898, 'latitude' : 17.14378 };
+    locArray[82] =  { 'longitude' : 95.2834, 'latitude' : 15.72387 };
+    locArray[83] =  { 'longitude' : 94.65745, 'latitude' : 16.66005 };
+    locArray[84] =  { 'longitude' : 94.3702, 'latitude' : 16.67192 };
+    locArray[85] =  { 'longitude' : 95.20242, 'latitude' : 15.86863 };
+    locArray[86] =  { 'longitude' : 94.5994, 'latitude' : 16.56513 };
+    locArray[87] =  { 'longitude' : 94.45, 'latitude' : 16.96067 };
+    locArray[88] =  { 'longitude' : 94.7363, 'latitude' : 16.90023 };
+    locArray[89] =  { 'longitude' : 94.61237, 'latitude' : 16.92722 };
+    locArray[90] =  { 'longitude' : 94.399, 'latitude' : 16.8805 };
+    locArray[91] =  { 'longitude' : 94.71867, 'latitude' : 16.99575 };
+    locArray[92] =  { 'longitude' : 94.802, 'latitude' : 16.80067 };
+    locArray[93] =  { 'longitude' : 94.70437, 'latitude' : 16.82398 };
+    locArray[94] =  { 'longitude' : 95.32065, 'latitude' : 16.63502 };
+    locArray[95] =  { 'longitude' : 96.30917, 'latitude' : 16.4395 };
+    locArray[96] =  { 'longitude' : 95.14837, 'latitude' : 16.37942 };
+    locArray[97] =  { 'longitude' : 96.02815, 'latitude' : 16.3974 };
+    locArray[98] =  { 'longitude' : 95.29422, 'latitude' : 16.7747 };
+    locArray[99] =  { 'longitude' : 95.45098, 'latitude' : 16.77083 };
+    locArray[100] =  { 'longitude' : 95.12672, 'latitude' : 16.55038 };
+    locArray[101] =  { 'longitude' : 96.16733, 'latitude' : 16.34283 };
+    locArray[102] =  { 'longitude' : 95.76888, 'latitude' : 16.56572 };
+    locArray[103] =  { 'longitude' : 95.86888, 'latitude' : 16.2113 };
+    locArray[104] =  { 'longitude' : 96.0026, 'latitude' : 16.24502 };
+    locArray[105] =  { 'longitude' : 95.77685, 'latitude' : 16.77763 };
+    locArray[106] =  { 'longitude' : 95.74305, 'latitude' : 16.23547 };
+    locArray[107] =  { 'longitude' : 96.34067, 'latitude' : 16.91517 };
+    locArray[108] =  { 'longitude' : 96.22058, 'latitude' : 16.4864 };
+    locArray[109] =  { 'longitude' : 96.1667, 'latitude' : 16.64867 };
+    locArray[110] =  { 'longitude' : 96.3445, 'latitude' : 16.75917 };
+    locArray[111] =  { 'longitude' : 96.49867, 'latitude' : 16.66183 };
+    locArray[112] =  { 'longitude' : 96.1945, 'latitude' : 16.9355 };
+
 }
 
 </script>
-    </html>
+</html>
