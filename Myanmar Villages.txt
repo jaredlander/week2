@@ -1,0 +1,36 @@
+VillageName
+0
+0
+169
+527
+911
+1085
+1003
+1028
+1680
+5357
+851
+5365
+732
+2033
+653
+6037
+5106
+1081
+1633
+105
+1666
+7636
+222
+7648
+413
+7093
+4163
+5510
+5900
+7736
+
+Take 5 from a village at random
+Calculate the questions and make 95% CI for both whole sample and for ours
+Do again for 10 and 20
+094° 41.503'

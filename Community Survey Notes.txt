@@ -1,0 +1,17 @@
+P. 8 Holistic picture -- hard to draw conclusions at individual predictor levels -- can use bayesian shrinkage
+P. 9 Example -- Of course you can multiply the % w/o access by the affected population if you post stratify
+P. 9 Communication -- don't like 8 out of 14, maybe do percentage while noting the sample size
+Graphical displays
+
+overall how safe is this
+then who feels more safe --> in the breakdowns
+
+minimum number of samples for community of interest
+rural/urban
+male/female
+argi/pastorial
+home/without shelter/in camp/someone else's home
+
+rules of thumb for how many predictors can work with given number of rows
+
+take phase 3 data and pull out parts that would have made phase 2
