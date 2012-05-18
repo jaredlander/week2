@@ -1,7 +1,8 @@
 ## get week 2 data
+## used to get data from the QlikView generated CSV into an rdata file.
 require(useful)
 require(stringr)
-pak <- read.table("C:/Users/Jared/week2/data/pakistan/pak week 2.csv", header=TRUE, sep=",")
+pak <- read.table("C:/Users/Jared/week2/data/pakistan/pak week 2 revised.csv", header=TRUE, sep=",")
 
 # get rid of tehsils that are not in list or blank
 pak <- pak[pak$Tehsil != "Not in list", ]
