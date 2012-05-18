@@ -2,90 +2,76 @@ require(useful)
 
 load("C:/Users/Jared/week2/data/pakistan/pak.rdata")
 
-build.dist <- function(data, lhs, group, question)
-{
-    theFormula <- build.formula(lhs=lhs, rhs=c(group, question))
-    agg <- aggregate(theFormula, data, length)
-    agg <- ddply(agg, .variables=group, .fun=function(x){ x$Percent <- x[[lhs]] / sum(x[[lhs]]); return(x) })
-    agg
-}
-
-## get random tehsils from each province
-village.list <- function(x, num=5, unit="Tehsil")
-{
-    # get list of units
-    units <- unique(x[, unit])
-    
-    # sample num of those without replacement
-    keepers <- sample(x=units, size=min(num, length(units)), replace=FALSE)
-    
-    return(as.character(keepers))
-}
-
 # isolate fields that involve lost (not acre)
 lostCols <- names(pak)[grep(pattern="Lost$", x=names(pak))]
 
 ## overall distribution
 ricePerc <- build.dist(data=pak, lhs="New_ID", group="Province", question="RiceLost")
+ricePerc$Size <- "All"
 ggplot(ricePerc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
 
-## get 5 Tehsils from each province
-pak5Tehsil <- dlply(pak, .variables="Province", .fun=village.list, num=5, unit="Tehsil")
-pak5 <- pak[pak$Tehsil %in% unlist(pak5Tehsil), ]
+
+# compare 5 tehsils per province to the overall distribution
+pak5 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=5, unit="Tehsil")), ]
 pak5$Tehsil <- factor(pak5$Tehsil)
-
-# 5 village distribution
 rice5Perc <- build.dist(data=pak5, lhs="New_ID", group="Province", question="RiceLost")
-
-rice5Perc
-ggplot(rice5Perc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
-
-myJoin <- join(x=ricePerc, y=rice5Perc, by=c("Province", "RiceLost"))
-View(myJoin)
-
-# function to make names of dist's better
-change.names <- function(names, include=names, prefix="")
-{
-    theOnes <- which(!names %in% include)
-    names[theOnes] <- sprintf("%s.%s", prefix, names[theOnes])
-    return(names)
-}
-
-## function to impute missing
-impute.col <- function(col, value=0)
-{
-    col[is.na(col)] <- value
-    return(col)
-}
-
-
-compare.dist <- function(full, partial, compare="Percent", by=intersect(names(full), names(partial)))
-{
-    # prepend Pull onto certain names in full
-    names(full) <- change.names(names=names(full), include=by, prefix="Full")
-    
-    # prepend Partial onto certain names in full
-    names(partial) <- change.names(names=names(partial), include=by, prefix="Partial")
-    
-    full.compare <- sprintf("Full.%s", compare)
-    partial.compare <- sprintf("Partial.%s", compare)
-    
-    # join the two together
-    both <- join(x=full, y=partial, by=by, type="left")
-    
-    rm(full, partial)
-    
-    ## fill in any NA's with zero
-    both[[full.compare]] <- impute.col(col=both[[full.compare]], value=0)
-    both[[partial.compare]] <- impute.col(col=both[[partial.compare]], value=0)
-
-    both$.Diff <- both[[full.compare]] - both[[partial.compare]]
-    
-    attr(x=both, which="MSE") <- mean(both$.Diff^2)
-    
-    #aggregate(build.formula(lhs=".Diff", rhs=
-    
-    return(both)
-}
+rice5Perc$Size <- "5"
 compare5 <- compare.dist(ricePerc, rice5Perc, by=c("Province", "RiceLost"))
+compare5$Partial.Size <- impute.col(col=compare5$Partial.Size, 5)
+ggplot(rice5Perc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
 View(compare5)
+
+# compare 10 tehsils per province to the overall distribution
+pak10 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=10, unit="Tehsil")), ]
+pak10$Tehsil <- factor(pak10$Tehsil)
+rice10Perc <- build.dist(data=pak10, lhs="New_ID", group="Province", question="RiceLost")
+rice10Perc$Size <- "10"
+compare10 <- compare.dist(ricePerc, rice10Perc, by=c("Province", "RiceLost"))
+compare10$Partial.Size <- impute.col(col=compare10$Partial.Size, 10)
+ggplot(rice10Perc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
+View(compare10)
+
+# compare 15 tehsils per province to the overall distribution
+pak15 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=15, unit="Tehsil")), ]
+pak15$Tehsil <- factor(pak15$Tehsil)
+rice15Perc <- build.dist(data=pak15, lhs="New_ID", group="Province", question="RiceLost")
+rice15Perc$Size <- "15"
+compare15 <- compare.dist(ricePerc, rice15Perc, by=c("Province", "RiceLost"))
+compare15$Partial.Size <- impute.col(col=compare15$Partial.Size, 15)
+ggplot(rice15Perc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
+View(compare15)
+
+# plot distributions for all measurement sizes on smae graph
+allT <- rbind(rice5Perc, rice10Perc, rice15Perc, ricePerc)
+allT$Size <- ordered(allT$Size, levels=c(5, 10, 15, "All"))
+ggplot(allT, aes(x=RiceLost, y=Percent)) + geom_bar(aes(group=Size, fill=Size), stat="identity", position="dodge") + opts(axis.text.x=theme_text(angle=90)) + facet_wrap(~Province)
+
+# plot differences
+head(compare5)
+allC <- rbind(compare5, compare10, compare15)
+allC$Partial.Size <- ordered(allC$Partial.Size, levels=c(5, 10, 15))
+head(allC)
+## no to the bar
+ggplot(allC, aes(x=RiceLost, y=.Diff)) + geom_bar(aes(fill=Partial.Size, colour=Partial.Size, group=Partial.Size), stat="identity", position="dodge") + opts(axis.text.x=theme_text(angle=90)) + facet_wrap(~Province)
+ggplot(allC, aes(x=RiceLost, y=.Diff)) + geom_line(aes(fill=Partial.Size, colour=Partial.Size, group=Partial.Size)) + opts(axis.text.x=theme_text(angle=90)) + facet_wrap(~Province) + geom_hline(yintercept=0, colour="grey", linetype=2)
+### We like this one below
+ggplot(allC, aes(x=RiceLost, y=.Diff)) + geom_line(aes(fill=Province, colour=Province, group=Province)) + opts(axis.text.x=theme_text(angle=90)) + facet_wrap(~Partial.Size) + geom_hline(yintercept=0, colour="grey", linetype=2)
+
+# plot MSE
+ggplot(allC, aes(x=Partial.Size, y=.MSE)) + geom_line(aes(group=Province))
+
+# number of villages in each province
+vills <- aggregate(Village ~ Province + Tehsil, pak, function(x){length(unique(x))})
+pros <- aggregate(Village ~ Province, vills, sum)
+ggplot(pros, aes(x=Province)) + geom_bar(aes(y=Village))
+ggplot(vills, aes(x=Tehsil)) + geom_point(aes(y=Village)) + opts(axis.text.x=theme_text(angle=90))
+ggplot(vills, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
+
+vills5 <- aggregate(Village ~ Province + Tehsil, pak5, function(x){length(unique(x))})
+ggplot(vills5, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
+
+vills10 <- aggregate(Village ~ Province + Tehsil, pak10, function(x){length(unique(x))})
+ggplot(vills10, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
+
+vills15 <- aggregate(Village ~ Province + Tehsil, pak15, function(x){length(unique(x))})
+ggplot(vills15, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
