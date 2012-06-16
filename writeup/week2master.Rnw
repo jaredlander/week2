@@ -37,14 +37,14 @@
 \SweaveOpts{background='#ffffff'}   % background color of code chunks.
 
 <<knitting, include=FALSE>>=
-#source("knitting.r")
 require(useful)
-#source("C:/Users/Jared/useful/R/knitting.r")
+source("knitting.r")
 # vector of chapters to be knitted
-chapters <- c("thedata",
+chapters <- c("distFuncs",
+              "thedata",
               "initial",
               "overall",
-              "distFuncs"
+              "smallerDist"
 )
 do.knit(files=sprintf("%s/%s", chapters, chapters))
 @
@@ -67,11 +67,13 @@ do.knit(files=sprintf("%s/%s", chapters, chapters))
 \input{initial/initial}
 \input{thedata/thedata}
 \input{overall/overall}
+\input{smallerDist/smallerDist}
 
 %\appendix
 %\backmatter
-%\cleardoublepage
-%\listoffigures
+\cleardoublepage
+\addcontentsline{toc}{section}{\numberline{}List of Figures}
+\listoffigures
 %\cleardoublepage
 %\listoftables
 %\cleardoublepage

@@ -2,17 +2,32 @@
 % The Data
 \section{The Data}
 \label{sec:thedata}
-The data was collected following the floods in Pakistan in 2010.
+<<grabdata,include=FALSE>>=
+load("C:/Users/Jared/week2/data/pakistan/pak.rdata")
+vills <- aggregate(Village ~ Province + Tehsil, pak, function(x){length(unique(x))})
+@
+The data was collected following the floods in Pakistan in 2010. Small Changes.
 
 It surveyed affected villages in GB, KPK, Punjab and Sindh.
 
-The distribution of villages within Tehsils within Provinces is seen in Figure ~\ref{fig:villageDist}.
-
-\begin{figure}[!hbtp]
-<<VillageDist,echo=FALSE,eval=TRUE,fig.path="thedata/figures/",dev="png",out.width=".9\\linewidth",message=FALSE>>=
-load("C:/Users/Jared/week2/data/pakistan/pak.rdata")
-vills <- aggregate(Village ~ Province + Tehsil, pak, function(x){length(unique(x))})
+% make code to plot Vill distribution but don't run or show it.
+<<VillDist,include=FALSE,eval=FALSE>>=
 ggplot(vills, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
 @
-\caption{Distribution of Villages within Tehsils and Provinces\label{fig:villageDist}}
+
+The distribution of villages within Tehsils within Provinces is seen in Figure~\ref{fig:VillageDist}.
+
+\begin{figure}[!hbtp]
+<<VillDistPlot,fig=TRUE,echo=FALSE,fig.path="thedata/figures/",dev='png',out.width='.9\\linewidth'>>=
+<<VillDist>>
+@
+\caption{Distribution of villages within Tehsils within the four Provinces.\label{fig:VillageDist}}
 \end{figure}
+
+Here is the code to run it.
+
+<<VillDistCode,fig=FALSE,echo=TRUE,eval=FALSE>>=
+<<VillDist>>
+@
+
+The analysis begins in Section~\ref{sec:overall}.
