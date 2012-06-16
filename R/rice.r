@@ -1,6 +1,9 @@
 require(useful)
+source("R/distFuncs.r")
 
 load("C:/Users/Jared/week2/data/pakistan/pak.rdata")
+pak$RiceLost[pak$RiceLost == ""] <- NA
+pak$RiceLost <- factor(pak$RiceLost)
 
 # isolate fields that involve lost (not acre)
 lostCols <- names(pak)[grep(pattern="Lost$", x=names(pak))]
@@ -8,7 +11,7 @@ lostCols <- names(pak)[grep(pattern="Lost$", x=names(pak))]
 ## overall distribution
 ricePerc <- build.dist(data=pak, lhs="New_ID", group="Province", question="RiceLost")
 ricePerc$Size <- "All"
-ggplot(ricePerc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
+ggplot(ricePerc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90, hjust=1))
 
 
 # compare 5 tehsils per province to the overall distribution
