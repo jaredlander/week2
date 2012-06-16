@@ -1,0 +1,38 @@
+% !Rnw weave = knitr
+% The Data
+\section{Analyzing All Data}
+\label{sec:overall}
+Here we analyze all of the data.
+
+First we load the data and view a portion of it.
+<<loaddata,message=FALSE,cache=TRUE>>=
+require(useful)
+load("C:/Users/Jared/week2/data/pakistan/pak.rdata")
+corner(pak, c=15)
+@
+
+
+Now we build a distribution and visualize it in Figure ~\ref{fig:allDist}.
+\begin{figure}[!hbtp]
+<<overallDist,dependson='functions',message=FALSE,fig.path="writeup/overall/figures",dev="png",out.width=".9\\linewidth">>=
+source("C:/Users/Jared/week2/R/distFuncs.r")
+ricePerc <- build.dist(data=pak, lhs="New_ID", group="Province", question="RiceLost")
+ricePerc$Size <- "All"
+ggplot(ricePerc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
+@
+\caption{Graphical view of the distribution of responses for all the data.\label{fig:allDist}}
+\end{figure}
+
+Quick comparison using just 5 Tehsils per province.
+\begin{figure}[!hbtp]
+<<fiveDist,dependson='functions',message=FALSE,fig.path="writeup/overall/figures",dev="png",out.width=".9\\linewidth">>=
+pak5 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=5, unit="Tehsil")), ]
+pak5$Tehsil <- factor(pak5$Tehsil)
+rice5Perc <- build.dist(data=pak5, lhs="New_ID", group="Province", question="RiceLost")
+rice5Perc$Size <- "5"
+compare5 <- compare.dist(ricePerc, rice5Perc, by=c("Province", "RiceLost"))
+compare5$Partial.Size <- impute.col(col=compare5$Partial.Size, 5)
+ggplot(rice5Perc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
+@
+\caption{Distribution for five villages per tehsil.\label{fig:fiveDist}}
+\end{figure}

@@ -1,0 +1,79 @@
+% !Rnw weave = knitr
+% Writeup of results
+% master file
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% define document class
+\documentclass{article}
+
+% get required packages
+\usepackage{graphicx}   % for graphics
+\usepackage{mathtools}  % for math formulas
+\usepackage{amssymb}    % for more math styles
+\usepackage{amsfonts}    % for more math styles
+%\usepackage{amsmath}
+%\usepackage[retainorgcmds]{IEEEtrantools}   % advanced equation alignment
+\usepackage{makeidx}    % for index generation
+%\usepackage{multind}
+\usepackage{showidx}
+
+% we are using primarily png graphics
+\DeclareGraphicsExtensions{.png}
+
+% make an index
+\makeindex
+
+% Title of book
+\newcommand{\myTitle}{Valid Inference from Early Stage Surveys}
+
+% This puts the chapter name at the top of the page
+\pagestyle{headings}
+
+\SweaveOpts{concordance=TRUE}   % generate concordance
+\SweaveOpts{out.width=".45\\linewidth",dev="png"}   % images are .45*linewidth by default and are png by default
+\SweaveOpts{background='#ffffff'}   % background color of code chunks.
+
+<<knitting, include=FALSE>>=
+#source("knitting.r")
+require(useful)
+#source("C:/Users/Jared/useful/R/knitting.r")
+# vector of chapters to be knitted
+chapters <- c("thedata",
+              "initial",
+              "overall",
+              "distFuncs"
+)
+do.knit(files=sprintf("%s/%s", chapters, chapters))
+@
+
+\title{\myTitle}
+\author{Richard Garfield\\ Columbia University School of Nursing \and Jared P. Lander\\ JP Lander Consulting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the main document
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%\frontmatter    % beginning of book
+\maketitle      % create the title page
+\tableofcontents    % table of contents
+
+
+% bulk of the book
+%\mainmatter
+\input{distFuncs/distFuncs}
+\input{initial/initial}
+\input{thedata/thedata}
+\input{overall/overall}
+
+%\appendix
+%\backmatter
+%\cleardoublepage
+%\listoffigures
+%\cleardoublepage
+%\listoftables
+%\cleardoublepage
+\printindex
+\end{document}
