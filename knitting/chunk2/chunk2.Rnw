@@ -1,0 +1,16 @@
+% There will be a graph in here.
+\section{Graphs}
+\label{sec:Graph}
+A graph will go below here.
+
+First a slight change here.
+
+And another small change.
+
+<<first-plot,fig.cap='The first graph of this one.',fig.scap='First Graph',fig.path='chunk2/figure/',fig.pos='!hbtp',dev='png'>>=
+plot(1:10, 1:10)
+@
+
+And then some more stuff.
+
+And a bit more.

@@ -1,0 +1,77 @@
+% simple plotting test
+\documentclass{article}
+
+% get required packages
+\usepackage{graphicx}   % for graphics
+\usepackage{mathtools}  % for math formulas
+\usepackage{amssymb}    % for more math styles
+\usepackage{amsfonts}    % for more math styles
+
+% we are using primarily png graphics
+\DeclareGraphicsExtensions{.png}
+
+% Title of book
+\newcommand{\myTitle}{Figure Option Testing}
+
+%\SweaveOpts{concordance=TRUE}   % generate concordance
+\Sexpr{opts_chunk$set(concordance = TRUE)}
+\Sexpr{opts_chunk$set(out.width = ".5\\linewidth")}
+\Sexpr{opts_chunk$set(dev = 'png')}
+\Sexpr{opts_chunk$set(background = '#ffffff')}  % images are .45*linewidth by default and are png by default
+\Sexpr{opts_chunk$set(fig.align='center')}
+
+\title{\myTitle}
+\author{Jared P. Lander\\ JP Lander Consulting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % the main document
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle      % create the title page
+\tableofcontents    % table of contents
+\listoffigures
+
+\section{Intro}
+\label{sec:Intro}
+
+Hello, this is a simple test of captions with plots in knitr.
+
+% this won't be show but will happen
+<<early,include=FALSE>>=
+require(ggplot2)
+data(diamonds)
+@
+
+Now onto the graphing.
+
+\section{First Graph}
+\label{sec:FirstGraph}
+
+Figure~\ref{fig:manual} manually calls the figure environment.
+
+\begin{figure}[!htbp]
+<<first-graph,echo=FALSE>>=
+qplot(1:10, 1:10)
+@
+\caption[Manual Environment]{Using manual figure environment\label{fig:manual}}
+\end{figure}
+
+Here is the code for doing so.
+<<first-graph-code,eval=FALSE>>=
+<<first-graph>>
+@
+
+How does that look?
+
+\section{Second Graph}
+\label{sec:SecondGraph}
+
+Here we will let \texttt{knitr} do it. This is seen in Figure~\ref{fig:second-graph}.
+
+<<second-graph,fig.cap='Using knitr, which is awesome, to create the figure environment.',fig.scap='knitr environment',fig.pos='!hbtp',fig.align='center'>>=
+qplot(1:10, 10:1)
+@
+
+Hopefully that looks nice.
+
+\end{document}
