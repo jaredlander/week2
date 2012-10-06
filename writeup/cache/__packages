@@ -1,9 +1,6 @@
 useful
-ggplot2
-proto
-grid
-reshape
 plyr
+ggplot2
 knitr
 stats
 graphics
