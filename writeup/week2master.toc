@@ -1,6 +1,0 @@
-\contentsline {section}{\numberline {1}Distribution Functions}{1}
-\contentsline {section}{\numberline {2}Initial Stuff}{3}
-\contentsline {section}{\numberline {3}The Data}{3}
-\contentsline {section}{\numberline {4}Analyzing All Data}{3}
-\contentsline {section}{\numberline {5}Analyzing Smaller Samples}{5}
-\contentsline {section}{\hbox to\@tempdima {\hfil }List of Figures}{12}
