@@ -2,7 +2,7 @@
 \section{Analyzing Smaller Samples}
 \label{sec:smallerDist}
 
-<<loaddata,message=FALSE,include=FALSE>>=
+<<loaddata-smallerDist,message=FALSE,include=FALSE>>=
 require(useful)
 load("C:/Users/Jared/week2/data/pakistan/pak.rdata")
 source("C:/Users/Jared/week2/R/distFuncs.r")
