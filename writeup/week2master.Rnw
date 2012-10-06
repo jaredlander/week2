@@ -32,22 +32,36 @@
 % This puts the chapter name at the top of the page
 \pagestyle{headings}
 
-\SweaveOpts{concordance=TRUE}   % generate concordance
-\SweaveOpts{out.width=".45\\linewidth",dev="png"}   % images are .45*linewidth by default and are png by default
-\SweaveOpts{background='#ffffff'}   % background color of code chunks.
 
-<<knitting, include=FALSE>>=
-require(useful)
-source("knitting.r")
-# vector of chapters to be knitted
-chapters <- c("distFuncs",
-              "thedata",
-              "initial",
-              "overall",
-              "smallerDist"
-)
-do.knit(files=sprintf("%s/%s", chapters, chapters))
+<<setup-options,include=FALSE>>=
+opts_knit$set(concordance=TRUE)                     #% generate concordance
+opts_chunk$set(background='#ffffff')                 #% background color of code chunks.
+opts_chunk$set(out.width=".45\\textwidth")           #% images are .45*linewidth by default
+opts_chunk$set(dev="png")                            #% images are png by default
+opts_chunk$set(fig.align='center')                   #% center images
+opts_chunk$set(fig.path='figures/')
+opts_chunk$set(fig.pos="!hbtp")
+opts_chunk$set(message=FALSE)                        #% do not print out messages
+opts_chunk$set(warning=FALSE)                        #% do not print out warnings
+opts_chunk$set(cache=TRUE)                           #% cache chunks
+opts_knit$set(self.contained=FALSE)
+opts_chunk$set(comment=NA, prompt=TRUE)             #% Whether to use prompts or comments
+options(left.brace.newline = TRUE)                  #% put the curly brace of functions on a new line where they belong
+options(width = 60)
 @
+
+% <<knitting, include=FALSE>>=
+% require(useful)
+% source("knitting.r")
+% # vector of chapters to be knitted
+% chapters <- c("distFuncs",
+%               "thedata",
+%               "initial",
+%               "overall",
+%               "smallerDist"
+% )
+% do.knit(files=sprintf("%s/%s", chapters, chapters))
+% @
 
 \title{\myTitle}
 \author{Richard Garfield\\ Columbia University School of Nursing \and Jared P. Lander\\ JP Lander Consulting}
@@ -63,11 +77,16 @@ do.knit(files=sprintf("%s/%s", chapters, chapters))
 
 % bulk of the book
 %\mainmatter
-\input{distFuncs/distFuncs}
-\input{initial/initial}
-\input{thedata/thedata}
-\input{overall/overall}
-\input{smallerDist/smallerDist}
+<<dist-funcs-section,child="distFuncs/distFuncs.Rnw">>=
+@
+% <<initial-section,child="initial/initial.Rnw">>=
+% @
+% <<the-data-section,child="thedata/thedata.Rnw">>=
+% @
+% <<overall-section,child="overall/overall.Rnw">>=
+% @
+% <<smaller-dist-section,child="smallerDist/smallerDist.Rnw">>=
+% @
 
 %\appendix
 %\backmatter
