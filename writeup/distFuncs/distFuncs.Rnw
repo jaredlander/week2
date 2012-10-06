@@ -1,6 +1,6 @@
 \section{Distribution Functions}
 \label{sec:DistributionFunctions}
-These are the functions used to calculate the distribution of each answer. They are general and should workd with any question.
+These are the functions used to calculate the distribution of each answer. They are general and should work with any question.
 
 <<functions,echo=TRUE,message=FALSE,cache=TRUE,eval=TRUE>>=
 # Distribution functions
