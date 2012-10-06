@@ -35,7 +35,7 @@
 
 <<setup-options,include=FALSE>>=
 opts_knit$set(concordance=TRUE)                     #% generate concordance
-opts_chunk$set(background='#ffffff')                 #% background color of code chunks.
+opts_knit$set(background='#ffffff')                 #% background color of code chunks.
 opts_chunk$set(out.width=".45\\textwidth")           #% images are .45*linewidth by default
 opts_chunk$set(dev="png")                            #% images are png by default
 opts_chunk$set(fig.align='center')                   #% center images
@@ -47,7 +47,7 @@ opts_chunk$set(cache=TRUE)                           #% cache chunks
 opts_knit$set(self.contained=FALSE)
 opts_chunk$set(comment=NA, prompt=TRUE)             #% Whether to use prompts or comments
 options(left.brace.newline = TRUE)                  #% put the curly brace of functions on a new line where they belong
-options(width = 60)
+options(width = 50)
 @
 
 % <<knitting, include=FALSE>>=
@@ -79,14 +79,14 @@ options(width = 60)
 %\mainmatter
 <<dist-funcs-section,child="distFuncs/distFuncs.Rnw">>=
 @
-% <<initial-section,child="initial/initial.Rnw">>=
-% @
-% <<the-data-section,child="thedata/thedata.Rnw">>=
-% @
-% <<overall-section,child="overall/overall.Rnw">>=
-% @
-% <<smaller-dist-section,child="smallerDist/smallerDist.Rnw">>=
-% @
+<<initial-section,child="initial/initial.Rnw">>=
+@
+<<the-data-section,child="thedata/thedata.Rnw">>=
+@
+<<overall-section,child="overall/overall.Rnw">>=
+@
+<<smaller-dist-section,child="smallerDist/smallerDist.Rnw">>=
+@
 
 %\appendix
 %\backmatter
