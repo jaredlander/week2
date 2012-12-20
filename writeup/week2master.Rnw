@@ -45,9 +45,9 @@ opts_chunk$set(message=FALSE)                        #% do not print out message
 opts_chunk$set(warning=FALSE)                        #% do not print out warnings
 opts_chunk$set(cache=TRUE)                           #% cache chunks
 opts_knit$set(self.contained=FALSE)
-opts_chunk$set(comment=NA, prompt=TRUE)             #% Whether to use prompts or comments
+opts_chunk$set(comment=NA, prompt=FALSE)             #% Whether to use prompts or comments
 options(left.brace.newline = TRUE)                  #% put the curly brace of functions on a new line where they belong
-options(width = 50)
+options(width = 55)
 @
 
 % <<knitting, include=FALSE>>=
