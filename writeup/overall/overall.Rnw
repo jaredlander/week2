@@ -1,33 +1,32 @@
 % !Rnw weave = knitr
+\Sexpr{set_parent('../week2master.Rnw')}
+\Sexpr{opts_knit$set(self.contained=FALSE)}
 % The Data
 \section{Analyzing All Data}
 \label{sec:overall}
 Here we analyze all of the data.
 
 First we load the data and view a portion of it. Some more details.
-<<loaddata,message=FALSE,cache=TRUE>>=
+
+These are the necessary packages.
+<<overall-packages,cache=FALSE>>=
 require(useful)
-load("C:/Users/Jared/week2/data/pakistan/pak.rdata")
-source("C:/Users/Jared/week2/R/distFuncs.r")
+require(plyr)
+require(ggplot2)
+@
+
+<<loaddata,cache=FALSE>>=
+load("../../data/pakistan/pak.rdata")
+source("../../R/distFuncs.r")
 corner(pak, c=15)
 @
 
-<<overallDist,include=FALSE,eval=FALSE>>=
+Now we build a distribution for all the data and visualize it in Figure~\ref{fig:overallDist} with the code here:.
+<<overallDist,fig.path="figures/",fig.cap="Graphical view of the distribution of responses for all the data.",fig.scap="Graphical view of the distribution of responses for all the data",out.width=".8\\linewidth">>=
 ricePerc <- build.dist(data=pak, lhs="New_ID", group="Province", question="RiceLost")
 ricePerc$Size <- "All"
 ggplot(ricePerc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
 @
 
-Now we build a distribution for all the data and visualize it in Figure~\ref{fig:fullDist} with the code here:.
-<<overallDistCode,fig=FALSE,eval=FALSE,echo=TRUE>>=
-<<overallDist>>
-@
-
-\begin{figure}[!hbt]
-<<overallDistPlot,fig=TRUE,message=FALSE,fig.path="overall/figures/",dev="png",out.width=".9\\linewidth">>=
-<<overallDist>>
-@
-\caption{Graphical view of the distribution of responses for all the data.\label{fig:fullDist}}
-\end{figure}
 
 In Section~\ref{sec:smallerDist} we analyze the distribution of responses for samples of fewer Tehsils.
