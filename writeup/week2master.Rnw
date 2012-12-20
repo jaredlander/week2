@@ -61,12 +61,12 @@ options(width = 55)
 
 <<dist-funcs-section,child="distFuncs/distFuncs.Rnw",cache=FALSE>>=
 @
-% <<initial-section,child="initial/initial.Rnw">>=
-% @
-% <<the-data-section,child="thedata/thedata.Rnw">>=
-% @
-% <<overall-section,child="overall/overall.Rnw">>=
-% @
+<<initial-section,child="initial/initial.Rnw">>=
+@
+<<the-data-section,child="thedata/thedata.Rnw">>=
+@
+<<overall-section,child="overall/overall.Rnw">>=
+@
 % <<smaller-dist-section,child="smallerDist/smallerDist.Rnw">>=
 % @
 

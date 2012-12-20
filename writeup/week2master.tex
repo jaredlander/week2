@@ -73,6 +73,7 @@ These are the functions used to calculate the distribution of each answer. They 
 \begin{alltt}
 \hlcomment{# Distribution functions}
 \hlfunctioncall{require}(useful)
+\hlfunctioncall{require}(plyr)
 \hlcomment{## builds the distribution for a given question}
 build.dist <- \hlfunctioncall{function}(data, lhs, group, question)
 \{
@@ -226,12 +227,147 @@ compare.dist <- \hlfunctioncall{function}(full, partial, compare = \hlstring{"Pe
 % }
 % @
 
-% <<initial-section,child="initial/initial.Rnw">>=
+% !Rnw weave = knitr
+% Initial stuff
+\section{Initial Stuff}
+\label{sec:initial}
+The data is as described in Section~\ref{sec:thedata}.
+
+We examined the answer to the question``What percentage of rice crops were lost due to the flood?''  We then randomly chose five Tehsils from each province, then 10, then 15 and performed the same analysis on the reduced data.
+
+In situations where a province has fewer than five, 10 or 15 Tehsils sampled, all were used.
+
+% !Rnw weave = knitr
+
+
+
+% The Data
+
+
+
+\section{The Data}
+\label{sec:thedata}
+
+
+The data were collected following the floods in Pakistan in 2010. Small Changes.
+
+It surveyed affected villages in GB, KPK, Punjab and Sindh.
+
+% make code to plot Vill distribution but don't run or show it.
+% <<VillDist,include=FALSE,eval=FALSE>>=
+% ggplot(vills, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
 % @
-% <<the-data-section,child="thedata/thedata.Rnw">>=
-% @
-% <<overall-section,child="overall/overall.Rnw">>=
-% @
+
+The distribution of villages within Tehsils within Provinces is seen in Figure~\ref{fig:VillDist}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{ggplot}(vills, \hlfunctioncall{aes}(x = Tehsil)) + \hlfunctioncall{geom_bar}(\hlfunctioncall{aes}(y = Village), 
+    stat = \hlstring{"identity"}) + \hlfunctioncall{opts}(axis.text.x = \hlfunctioncall{theme_text}(angle = 270, 
+    hjust = 0)) + \hlfunctioncall{facet_wrap}(~Province, scales = \hlstring{"free_x"})
+\end{alltt}
+\end{kframe}\begin{figure}[!hbtp]
+
+
+{\centering \includegraphics[width=.9\linewidth]{figures/VillDist} 
+
+}
+
+\caption[Distribution of villages within Tehsils]{Distribution of villages within Tehsils within the four Provinces.\label{fig:VillDist}}
+\end{figure}
+
+
+\end{knitrout}
+
+The analysis begins in Section~\ref{sec:overall}.
+
+% !Rnw weave = knitr
+
+
+% The Data
+\section{Analyzing All Data}
+\label{sec:overall}
+Here we analyze all of the data.
+
+First we load the data and view a portion of it. Some more details.
+
+These are the necessary packages.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{require}(useful)
+\hlfunctioncall{require}(plyr)
+\hlfunctioncall{require}(ggplot2)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{load}(\hlstring{"../../data/pakistan/pak.rdata"})
+\hlfunctioncall{source}(\hlstring{"../../R/distFuncs.r"})
+\hlfunctioncall{corner}(pak, c = 15)
+\end{alltt}
+\begin{verbatim}
+  New_ID Age  Sex     Date Province District Tehsil
+1   1288  26 Male 29082010      KPK  Shangla Besham
+2   1290  30 Male 29082010      KPK  Shangla Besham
+3   1370  54 Male 28082010      KPK  Shangla Besham
+4   1372  53 Male 28082010      KPK  Shangla Besham
+5   1371  64 Male 28082010      KPK  Shangla Besham
+         Village Latitude Longitude Total Urban Rural
+1 abaseen colony    34.94     72.88  90.6     -  90.6
+2 abaseen colony    34.94     72.88  90.6     -  90.6
+3 abaseen colony    34.94     72.88  90.6     -  90.6
+4 abaseen colony    34.94     72.88  90.6     -  90.6
+5 abaseen colony    34.94     72.88  90.6     -  90.6
+                                Accommodation
+1 Collective centers (school/Public building)
+2                                 Host family
+3          On the site of the house (Damaged)
+4          On the site of the house (Damaged)
+5          On the site of the house (Damaged)
+  StagnantWater
+1           Few
+2           Few
+3           Few
+4          None
+5          None
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+Now we build a distribution for all the data and visualize it in Figure~\ref{fig:overallDist} with the code here:.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+ricePerc <- \hlfunctioncall{build.dist}(data = pak, lhs = \hlstring{"New_ID"}, group = \hlstring{"Province"}, 
+    question = \hlstring{"RiceLost"})
+ricePerc$Size <- \hlstring{"All"}
+\hlfunctioncall{ggplot}(ricePerc, \hlfunctioncall{aes}(x = RiceLost, y = Percent)) + \hlfunctioncall{geom_bar}(stat = \hlstring{"identity"}) + 
+    \hlfunctioncall{facet_wrap}(~Province) + \hlfunctioncall{opts}(axis.text.x = \hlfunctioncall{theme_text}(angle = 90))
+\end{alltt}
+\end{kframe}\begin{figure}[!hbtp]
+
+
+{\centering \includegraphics[width=.8\linewidth]{figures/overallDist} 
+
+}
+
+\caption[Graphical view of the distribution of responses for all the data]{Graphical view of the distribution of responses for all the data.\label{fig:overallDist}}
+\end{figure}
+
+
+\end{knitrout}
+
+
+
+In Section~\ref{sec:smallerDist} we analyze the distribution of responses for samples of fewer Tehsils.
+
 % <<smaller-dist-section,child="smallerDist/smallerDist.Rnw">>=
 % @
 
