@@ -1,33 +1,30 @@
 % !Rnw weave = knitr
+\Sexpr{set_parent('../week2master.Rnw')}
+\Sexpr{opts_knit$set(self.contained=FALSE)}
+
 % The Data
+<<thedata-packages,include=FALSE>>=
+require(ggplot2)
+@
+
 \section{The Data}
 \label{sec:thedata}
 <<grabdata,include=FALSE>>=
-load("C:/Users/Jared/week2/data/pakistan/pak.rdata")
+load("../../data/pakistan/pak.rdata")
 vills <- aggregate(Village ~ Province + Tehsil, pak, function(x){length(unique(x))})
 @
-The data was collected following the floods in Pakistan in 2010. Small Changes.
+The data were collected following the floods in Pakistan in 2010. Small Changes.
 
 It surveyed affected villages in GB, KPK, Punjab and Sindh.
 
 % make code to plot Vill distribution but don't run or show it.
-<<VillDist,include=FALSE,eval=FALSE>>=
+% <<VillDist,include=FALSE,eval=FALSE>>=
+% ggplot(vills, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
+% @
+
+The distribution of villages within Tehsils within Provinces is seen in Figure~\ref{fig:VillDist}.
+
+<<VillDist,fig=TRUE,echo=TRUE,fig.path="figures/",out.width='.9\\linewidth',fig.cap="Distribution of villages within Tehsils within the four Provinces.",fig.scap="Distribution of villages within Tehsils">>=
 ggplot(vills, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
 @
-
-The distribution of villages within Tehsils within Provinces is seen in Figure~\ref{fig:VillageDist}.
-
-\begin{figure}[!hbtp]
-<<VillDistPlot,fig=TRUE,echo=FALSE,fig.path="thedata/figures/",dev='png',out.width='.9\\linewidth'>>=
-<<VillDist>>
-@
-\caption{Distribution of villages within Tehsils within the four Provinces.\label{fig:VillageDist}}
-\end{figure}
-
-Here is the code to run it.
-
-<<VillDistCode,fig=FALSE,echo=TRUE,eval=FALSE>>=
-<<VillDist>>
-@
-
 The analysis begins in Section~\ref{sec:overall}.

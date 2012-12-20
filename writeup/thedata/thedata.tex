@@ -1,43 +1,89 @@
+
+\documentclass{article}
+\usepackage{knitr}
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+
+% get required packages
+\usepackage{graphicx}   % for graphics
+\usepackage{mathtools}  % for math formulas
+\usepackage{amssymb}    % for more math styles
+\usepackage{amsfonts}    % for more math styles
+%\usepackage{amsmath}
+%\usepackage[retainorgcmds]{IEEEtrantools}   % advanced equation alignment
+\usepackage{makeidx}    % for index generation
+\usepackage{showidx}
+
+% we are using primarily png graphics
+\DeclareGraphicsExtensions{.png,.pdf}
+
+% make an index
+\makeindex
+
+% Title of book
+\newcommand{\myTitle}{Generalizing from Purposive Surveys\\ How large a Sample is Needed}
+
+% This puts the chapter name at the top of the page
+\pagestyle{headings}
+
+
+
+
+
+\title{\myTitle}
+\author{Richard Garfield\\ Columbia University School of Nursing \and Jared P. Lander\\ JP Lander Consulting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the main document
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
 % !Rnw weave = knitr
+
+
+
 % The Data
+
+
+
 \section{The Data}
 \label{sec:thedata}
 
 
-The data was collected following the floods in Pakistan in 2010. Small Changes.
+The data were collected following the floods in Pakistan in 2010. Small Changes.
 
 It surveyed affected villages in GB, KPK, Punjab and Sindh.
 
 % make code to plot Vill distribution but don't run or show it.
+% <<VillDist,include=FALSE,eval=FALSE>>=
+% ggplot(vills, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
+% @
 
-
-
-The distribution of villages within Tehsils within Provinces is seen in Figure~\ref{fig:VillageDist}.
-
-\begin{figure}[!hbtp]
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-
-
-{\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: 'opts' is deprecated.\\\#\# Use 'theme' instead.\\\#\# See help("Deprecated")}}
-
-{\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: 'theme\_text' is deprecated.\\\#\# Use 'element\_text' instead.\\\#\# See help("Deprecated")}}\end{kframe}\includegraphics[width=.9\linewidth]{thedata/figures/VillDistPlot} 
-\end{knitrout}
-
-\caption{Distribution of villages within Tehsils within the four Provinces.\label{fig:VillageDist}}
-\end{figure}
-
-Here is the code to run it.
+The distribution of villages within Tehsils within Provinces is seen in Figure~\ref{fig:VillDist}.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlfunctioncall{ggplot}(vills, \hlfunctioncall{aes}(x = Tehsil)) + \hlfunctioncall{geom_bar}(\hlfunctioncall{aes}(y = Village), stat = \hlstring{"identity"}) + 
-    \hlfunctioncall{opts}(axis.text.x = \hlfunctioncall{theme_text}(angle = 270, hjust = 0)) + \hlfunctioncall{facet_wrap}(~Province, 
-    scales = \hlstring{"free_x"})
+\hlfunctioncall{ggplot}(vills, \hlfunctioncall{aes}(x = Tehsil)) + \hlfunctioncall{geom_bar}(\hlfunctioncall{aes}(y = Village), 
+    stat = \hlstring{"identity"}) + \hlfunctioncall{opts}(axis.text.x = \hlfunctioncall{theme_text}(angle = 270, 
+    hjust = 0)) + \hlfunctioncall{facet_wrap}(~Province, scales = \hlstring{"free_x"})
 \end{alltt}
-\end{kframe}
+\end{kframe}\begin{figure}[!hbtp]
+
+
+{\centering \includegraphics[width=.9\linewidth]{figures/VillDist} 
+
+}
+
+\caption[Distribution of villages within Tehsils]{Distribution of villages within Tehsils within the four Provinces.\label{fig:VillDist}}
+\end{figure}
+
+
 \end{knitrout}
 
-
 The analysis begins in Section~\ref{sec:overall}.
+\end{document}
