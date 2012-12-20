@@ -1,6 +1,7 @@
 ## @knitr distFuncs
 # Distribution functions
 require(useful)
+require(plyr)
 ## builds the distribution for a given question
 build.dist <- function(data, lhs, group, question)
 {
