@@ -1,0 +1,83 @@
+\section{Distribution Functions}
+\label{sec:DistributionFunctions}
+These are the functions used to calculate the distribution of each answer. They are general and should work with any question.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }Distribution{\ }functions}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{require}\hlkeyword{(}\hlsymbol{useful}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}\usebox{\hlnormalsizeboxhash}{\ }builds{\ }the{\ }distribution{\ }for{\ }a{\ }given{\ }question}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{build.dist}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlkeyword{function}\hlkeyword{(}\hlformalargs{data}\hlkeyword{,}{\ }\hlformalargs{lhs}\hlkeyword{,}{\ }\hlformalargs{group}\hlkeyword{,}{\ }\hlformalargs{question}\hlkeyword{)}{\ }\hlkeyword{\usebox{\hlnormalsizeboxopenbrace}}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{theFormula}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{build.formula}\hlkeyword{(}\hlargument{lhs}{\ }\hlargument{=}{\ }\hlsymbol{lhs}\hlkeyword{,}{\ }\hlargument{rhs}{\ }\hlargument{=}{\ }\hlfunctioncall{c}\hlkeyword{(}\hlsymbol{group}\hlkeyword{,}{\ }\hlsymbol{question}\hlkeyword{)}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{agg}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{aggregate}\hlkeyword{(}\hlsymbol{theFormula}\hlkeyword{,}{\ }\hlsymbol{data}\hlkeyword{,}{\ }\hlsymbol{length}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{agg}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{ddply}\hlkeyword{(}\hlsymbol{agg}\hlkeyword{,}{\ }\hlargument{.variables}{\ }\hlargument{=}{\ }\hlsymbol{group}\hlkeyword{,}{\ }\hlargument{.fun}{\ }\hlargument{=}{\ }\hlkeyword{function}\hlkeyword{(}\hlformalargs{x}\hlkeyword{)}{\ }\hlkeyword{\usebox{\hlnormalsizeboxopenbrace}}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }{\ }{\ }{\ }{\ }\hlsymbol{x}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{Percent}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{x}\hlkeyword{[[}\hlsymbol{lhs}\hlkeyword{]}\hlkeyword{]}\hlkeyword{/}\hlfunctioncall{sum}\hlkeyword{(}\hlsymbol{x}\hlkeyword{[[}\hlsymbol{lhs}\hlkeyword{]}\hlkeyword{]}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }{\ }{\ }{\ }{\ }\hlfunctioncall{return}\hlkeyword{(}\hlsymbol{x}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlkeyword{\usebox{\hlnormalsizeboxclosebrace}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{agg}\hspace*{\fill}\\
+\hlstd{}\hlkeyword{\usebox{\hlnormalsizeboxclosebrace}}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}\usebox{\hlnormalsizeboxhash}{\ }get{\ }random{\ }Tehsils{\ }from{\ }a{\ }province}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{village.list}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlkeyword{function}\hlkeyword{(}\hlformalargs{x}\hlkeyword{,}{\ }\hlformalargs{num}{\ }\hleqformalargs{=}{\ }\hlnumber{5}\hlkeyword{,}{\ }\hlformalargs{unit}{\ }\hleqformalargs{=}{\ }\hlstring{"{}Tehsil"{}}\hlkeyword{)}{\ }\hlkeyword{\usebox{\hlnormalsizeboxopenbrace}}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }get{\ }list{\ }of{\ }units}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{units}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{unique}\hlkeyword{(}\hlsymbol{x}\hlkeyword{[}\hlkeyword{,}{\ }\hlsymbol{unit}\hlkeyword{]}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }sample{\ }num{\ }of{\ }those{\ }without{\ }replacement}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{keepers}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{sample}\hlkeyword{(}\hlargument{x}{\ }\hlargument{=}{\ }\hlsymbol{units}\hlkeyword{,}{\ }\hlargument{size}{\ }\hlargument{=}{\ }\hlfunctioncall{min}\hlkeyword{(}\hlsymbol{num}\hlkeyword{,}{\ }\hlfunctioncall{length}\hlkeyword{(}\hlsymbol{units}\hlkeyword{)}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{replace}{\ }\hlargument{=}{\ }\hlnumber{FALSE}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlfunctioncall{return}\hlkeyword{(}\hlfunctioncall{as.character}\hlkeyword{(}\hlsymbol{keepers}\hlkeyword{)}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlkeyword{\usebox{\hlnormalsizeboxclosebrace}}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }function{\ }to{\ }make{\ }names{\ }of{\ }dist\usebox{\hlnormalsizeboxsinglequote}s{\ }better}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{change.names}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlkeyword{function}\hlkeyword{(}\hlformalargs{names}\hlkeyword{,}{\ }\hlformalargs{include}{\ }\hleqformalargs{=}{\ }\hlsymbol{names}\hlkeyword{,}{\ }\hlformalargs{prefix}{\ }\hleqformalargs{=}{\ }\hlstring{"{}"{}}\hlkeyword{)}{\ }\hlkeyword{\usebox{\hlnormalsizeboxopenbrace}}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{theOnes}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{which}\hlkeyword{(}\hlkeyword{!}\hlsymbol{names}{\ }\hlkeyword{\usebox{\hlnormalsizeboxpercent}in\usebox{\hlnormalsizeboxpercent}}{\ }\hlsymbol{include}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{names}\hlkeyword{[}\hlsymbol{theOnes}\hlkeyword{]}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{sprintf}\hlkeyword{(}\hlstring{"{}\usebox{\hlnormalsizeboxpercent}s.\usebox{\hlnormalsizeboxpercent}s"{}}\hlkeyword{,}{\ }\hlsymbol{prefix}\hlkeyword{,}{\ }\hlsymbol{names}\hlkeyword{[}\hlsymbol{theOnes}\hlkeyword{]}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlfunctioncall{return}\hlkeyword{(}\hlsymbol{names}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlkeyword{\usebox{\hlnormalsizeboxclosebrace}}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}\usebox{\hlnormalsizeboxhash}{\ }function{\ }to{\ }impute{\ }missing}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{impute.col}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlkeyword{function}\hlkeyword{(}\hlformalargs{col}\hlkeyword{,}{\ }\hlformalargs{value}{\ }\hleqformalargs{=}{\ }\hlnumber{0}\hlkeyword{)}{\ }\hlkeyword{\usebox{\hlnormalsizeboxopenbrace}}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{col}\hlkeyword{[}\hlfunctioncall{is.na}\hlkeyword{(}\hlsymbol{col}\hlkeyword{)}\hlkeyword{]}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{value}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlfunctioncall{return}\hlkeyword{(}\hlsymbol{col}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlkeyword{\usebox{\hlnormalsizeboxclosebrace}}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hlcomment{\usebox{\hlnormalsizeboxhash}\usebox{\hlnormalsizeboxhash}{\ }this{\ }compares{\ }two{\ }distributions{\ }and{\ }computes{\ }an{\ }MSE}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{compare.dist}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlkeyword{function}\hlkeyword{(}\hlformalargs{full}\hlkeyword{,}{\ }\hlformalargs{partial}\hlkeyword{,}{\ }\hlformalargs{compare}{\ }\hleqformalargs{=}{\ }\hlstring{"{}Percent"{}}\hlkeyword{,}{\ }\hlformalargs{by}{\ }\hleqformalargs{=}{\ }\hlfunctioncall{intersect}\hlkeyword{(}\hlfunctioncall{names}\hlkeyword{(}\hlsymbol{full}\hlkeyword{)}\hlkeyword{,}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlfunctioncall{names}\hlkeyword{(}\hlsymbol{partial}\hlkeyword{)}\hlkeyword{)}\hlkeyword{)}{\ }\hlkeyword{\usebox{\hlnormalsizeboxopenbrace}}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }prepend{\ }Pull{\ }onto{\ }certain{\ }names{\ }in{\ }full}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlfunctioncall{names}\hlkeyword{(}\hlsymbol{full}\hlkeyword{)}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{change.names}\hlkeyword{(}\hlargument{names}{\ }\hlargument{=}{\ }\hlfunctioncall{names}\hlkeyword{(}\hlsymbol{full}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{include}{\ }\hlargument{=}{\ }\hlsymbol{by}\hlkeyword{,}{\ }\hlargument{prefix}{\ }\hlargument{=}{\ }\hlstring{"{}Full"{}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }prepend{\ }Partial{\ }onto{\ }certain{\ }names{\ }in{\ }full}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlfunctioncall{names}\hlkeyword{(}\hlsymbol{partial}\hlkeyword{)}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{change.names}\hlkeyword{(}\hlargument{names}{\ }\hlargument{=}{\ }\hlfunctioncall{names}\hlkeyword{(}\hlsymbol{partial}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{include}{\ }\hlargument{=}{\ }\hlsymbol{by}\hlkeyword{,}{\ }\hlargument{prefix}{\ }\hlargument{=}{\ }\hlstring{"{}Partial"{}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{full.compare}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{sprintf}\hlkeyword{(}\hlstring{"{}Full.\usebox{\hlnormalsizeboxpercent}s"{}}\hlkeyword{,}{\ }\hlsymbol{compare}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{partial.compare}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{sprintf}\hlkeyword{(}\hlstring{"{}Partial.\usebox{\hlnormalsizeboxpercent}s"{}}\hlkeyword{,}{\ }\hlsymbol{compare}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }join{\ }the{\ }two{\ }together}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{both}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{join}\hlkeyword{(}\hlargument{x}{\ }\hlargument{=}{\ }\hlsymbol{full}\hlkeyword{,}{\ }\hlargument{y}{\ }\hlargument{=}{\ }\hlsymbol{partial}\hlkeyword{,}{\ }\hlargument{by}{\ }\hlargument{=}{\ }\hlsymbol{by}\hlkeyword{,}{\ }\hlargument{type}{\ }\hlargument{=}{\ }\hlstring{"{}left"{}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlfunctioncall{rm}\hlkeyword{(}\hlsymbol{full}\hlkeyword{,}{\ }\hlsymbol{partial}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}\usebox{\hlnormalsizeboxhash}{\ }fill{\ }in{\ }any{\ }NA\usebox{\hlnormalsizeboxsinglequote}s{\ }with{\ }zero}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{both}\hlkeyword{[[}\hlsymbol{full.compare}\hlkeyword{]}\hlkeyword{]}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{impute.col}\hlkeyword{(}\hlargument{col}{\ }\hlargument{=}{\ }\hlsymbol{both}\hlkeyword{[[}\hlsymbol{full.compare}\hlkeyword{]}\hlkeyword{]}\hlkeyword{,}{\ }\hlargument{value}{\ }\hlargument{=}{\ }\hlnumber{0}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{both}\hlkeyword{[[}\hlsymbol{partial.compare}\hlkeyword{]}\hlkeyword{]}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{impute.col}\hlkeyword{(}\hlargument{col}{\ }\hlargument{=}{\ }\hlsymbol{both}\hlkeyword{[[}\hlsymbol{partial.compare}\hlkeyword{]}\hlkeyword{]}\hlkeyword{,}{\ }\hlargument{value}{\ }\hlargument{=}{\ }\hlnumber{0}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{both}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{.Diff}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{both}\hlkeyword{[[}\hlsymbol{full.compare}\hlkeyword{]}\hlkeyword{]}{\ }\hlkeyword{-}{\ }\hlsymbol{both}\hlkeyword{[[}\hlsymbol{partial.compare}\hlkeyword{]}\hlkeyword{]}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{both}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{.MSE}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{mean}\hlkeyword{(}\hlsymbol{both}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{.Diff}\hlkeyword{\usebox{\hlnormalsizeboxhat}}\hlnumber{2}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }attr(x=both,{\ }which=\usebox{\hlnormalsizeboxsinglequote}MSE\usebox{\hlnormalsizeboxsinglequote}){\ }\usebox{\hlnormalsizeboxlessthan}-{\ }mean(both\usebox{\hlnormalsizeboxdollar}.Diff\usebox{\hlnormalsizeboxhat}2)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlcomment{\usebox{\hlnormalsizeboxhash}{\ }aggregate(build.formula(lhs=\usebox{\hlnormalsizeboxsinglequote}.Diff\usebox{\hlnormalsizeboxsinglequote},{\ }rhs=}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlfunctioncall{return}\hlkeyword{(}\hlsymbol{both}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlkeyword{\usebox{\hlnormalsizeboxclosebrace}}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+

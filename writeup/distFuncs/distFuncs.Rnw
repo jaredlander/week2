@@ -1,3 +1,7 @@
+% !Rnw weave = knitr
+\Sexpr{set_parent('../week2master.Rnw')}
+\Sexpr{opts_knit$set(self.contained=FALSE)}
+
 \section{Distribution Functions}
 \label{sec:DistributionFunctions}
 These are the functions used to calculate the distribution of each answer. They are general and should work with any question.
