@@ -1,3 +1,4 @@
+## @knitr distFuncs
 # Distribution functions
 require(useful)
 ## builds the distribution for a given question
