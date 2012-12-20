@@ -1,6 +1,69 @@
+
+\documentclass{article}
+\usepackage{knitr}
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+
+% get required packages
+\usepackage{graphicx}   % for graphics
+\usepackage{mathtools}  % for math formulas
+\usepackage{amssymb}    % for more math styles
+\usepackage{amsfonts}    % for more math styles
+%\usepackage{amsmath}
+%\usepackage[retainorgcmds]{IEEEtrantools}   % advanced equation alignment
+\usepackage{makeidx}    % for index generation
+\usepackage{showidx}
+
+% we are using primarily png graphics
+\DeclareGraphicsExtensions{.png,.pdf}
+
+% make an index
+\makeindex
+
+% Title of book
+\newcommand{\myTitle}{Generalizing from Purposive Surveys\\ How large a Sample is Needed}
+
+% This puts the chapter name at the top of the page
+\pagestyle{headings}
+
+
+
+
+
+\title{\myTitle}
+\author{Richard Garfield\\ Columbia University School of Nursing \and Jared P. Lander\\ JP Lander Consulting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the main document
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+% !Rnw weave = knitr
+
+
+
+
+
+
 \section{Distribution Functions}
 \label{sec:DistributionFunctions}
-These are the functions used to calculate the distribution of each answer. They are general and should workd with any question.
+These are the functions used to calculate the distribution of each answer. They are general and should work with any question.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{getwd}()
+\end{alltt}
+\begin{verbatim}
+[1] "C:/Users/Jared/week2/writeup/distFuncs"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
@@ -8,70 +71,76 @@ These are the functions used to calculate the distribution of each answer. They 
 \hlcomment{# Distribution functions}
 \hlfunctioncall{require}(useful)
 \hlcomment{## builds the distribution for a given question}
-build.dist <- \hlfunctioncall{function}(data, lhs, group, question) \{
-    theFormula <- \hlfunctioncall{build.formula}(lhs = lhs, rhs = \hlfunctioncall{c}(group, question))
+build.dist <- \hlfunctioncall{function}(data, lhs, group, question)
+\{
+    theFormula <- \hlfunctioncall{build.formula}(lhs = lhs, rhs = \hlfunctioncall{c}(group, 
+        question))
     agg <- \hlfunctioncall{aggregate}(theFormula, data, length)
-    agg <- \hlfunctioncall{ddply}(agg, .variables = group, .fun = \hlfunctioncall{function}(x) \{
+    agg <- \hlfunctioncall{ddply}(agg, .variables = group, .fun = \hlfunctioncall{function}(x)
+    \{
         x$Percent <- x[[lhs]]/\hlfunctioncall{sum}(x[[lhs]])
         \hlfunctioncall{return}(x)
     \})
     agg
 \}
-
-
-\hlcomment{## get random Tehsils from a province}
-village.list <- \hlfunctioncall{function}(x, num = 5, unit = \hlstring{"Tehsil"}) \{
-    \hlcomment{# get list of units}
+\hlcomment{## get random tehsils from a province}
+village.list <- \hlfunctioncall{function}(x, num = 5, unit = \hlstring{"Tehsil"})
+\{
+\hlcomment{    # get list of units}
     units <- \hlfunctioncall{unique}(x[, unit])
     
-    \hlcomment{# sample num of those without replacement}
-    keepers <- \hlfunctioncall{sample}(x = units, size = \hlfunctioncall{min}(num, \hlfunctioncall{length}(units)), replace = FALSE)
+\hlcomment{    # sample num of those without replacement}
+    keepers <- \hlfunctioncall{sample}(x = units, size = \hlfunctioncall{min}(num, \hlfunctioncall{length}(units)), 
+        replace = FALSE)
     
     \hlfunctioncall{return}(\hlfunctioncall{as.character}(keepers))
 \}
-
-
 \hlcomment{# function to make names of dist's better}
-change.names <- \hlfunctioncall{function}(names, include = names, prefix = \hlstring{""}) \{
+change.names <- \hlfunctioncall{function}(names, include = names, prefix = \hlstring{""})
+\{
     theOnes <- \hlfunctioncall{which}(!names %in% include)
     names[theOnes] <- \hlfunctioncall{sprintf}(\hlstring{"%s.%s"}, prefix, names[theOnes])
     \hlfunctioncall{return}(names)
 \}
-
 \hlcomment{## function to impute missing}
-impute.col <- \hlfunctioncall{function}(col, value = 0) \{
+impute.col <- \hlfunctioncall{function}(col, value = 0)
+\{
     col[\hlfunctioncall{is.na}(col)] <- value
     \hlfunctioncall{return}(col)
 \}
-
 \hlcomment{## this compares two distributions and computes an MSE}
-compare.dist <- \hlfunctioncall{function}(full, partial, compare = \hlstring{"Percent"}, by = \hlfunctioncall{intersect}(\hlfunctioncall{names}(full), 
-    \hlfunctioncall{names}(partial))) \{
-    \hlcomment{# prepend Pull onto certain names in full}
-    \hlfunctioncall{names}(full) <- \hlfunctioncall{change.names}(names = \hlfunctioncall{names}(full), include = by, prefix = \hlstring{"Full"})
+compare.dist <- \hlfunctioncall{function}(full, partial, compare = \hlstring{"Percent"}, 
+    by = \hlfunctioncall{intersect}(\hlfunctioncall{names}(full), \hlfunctioncall{names}(partial)))
+\{
+\hlcomment{    # prepend Pull onto certain names in full}
+    \hlfunctioncall{names}(full) <- \hlfunctioncall{change.names}(names = \hlfunctioncall{names}(full), include = by, 
+        prefix = \hlstring{"Full"})
     
-    \hlcomment{# prepend Partial onto certain names in full}
-    \hlfunctioncall{names}(partial) <- \hlfunctioncall{change.names}(names = \hlfunctioncall{names}(partial), include = by, prefix = \hlstring{"Partial"})
+\hlcomment{    # prepend Partial onto certain names in full}
+    \hlfunctioncall{names}(partial) <- \hlfunctioncall{change.names}(names = \hlfunctioncall{names}(partial), 
+        include = by, prefix = \hlstring{"Partial"})
     
     full.compare <- \hlfunctioncall{sprintf}(\hlstring{"Full.%s"}, compare)
     partial.compare <- \hlfunctioncall{sprintf}(\hlstring{"Partial.%s"}, compare)
     
-    \hlcomment{# join the two together}
+\hlcomment{    # join the two together}
     both <- \hlfunctioncall{join}(x = full, y = partial, by = by, type = \hlstring{"left"})
     
     \hlfunctioncall{rm}(full, partial)
     
-    \hlcomment{## fill in any NA's with zero}
-    both[[full.compare]] <- \hlfunctioncall{impute.col}(col = both[[full.compare]], value = 0)
-    both[[partial.compare]] <- \hlfunctioncall{impute.col}(col = both[[partial.compare]], value = 0)
+\hlcomment{    ## fill in any NA's with zero}
+    both[[full.compare]] <- \hlfunctioncall{impute.col}(col = both[[full.compare]], 
+        value = 0)
+    both[[partial.compare]] <- \hlfunctioncall{impute.col}(col = both[[partial.compare]], 
+        value = 0)
     
     both$.Diff <- both[[full.compare]] - both[[partial.compare]]
     
     both$.MSE <- \hlfunctioncall{mean}(both$.Diff^2)
     
-    \hlcomment{# \hlfunctioncall{attr}(x=both, which=\hlstring{'MSE'}) <- \hlfunctioncall{mean}(both$.Diff^2)}
+\hlcomment{    # attr(x=both, which='MSE') <- mean(both$.Diff^2)}
     
-    \hlcomment{# \hlfunctioncall{aggregate}(\hlfunctioncall{build.formula}(lhs=\hlstring{'.Diff'}, rhs=}
+\hlcomment{    # aggregate(build.formula(lhs='.Diff', rhs=}
     
     \hlfunctioncall{return}(both)
 \}
@@ -79,3 +148,78 @@ compare.dist <- \hlfunctioncall{function}(full, partial, compare = \hlstring{"Pe
 \end{kframe}
 \end{knitrout}
 
+
+% <<functions>>=
+% # Distribution functions
+% require(useful)
+% ## builds the distribution for a given question
+% build.dist <- function(data, lhs, group, question)
+% {
+%     theFormula <- build.formula(lhs=lhs, rhs=c(group, question))
+%     agg <- aggregate(theFormula, data, length)
+%     agg <- ddply(agg, .variables=group, .fun=function(x){ x$Percent <- x[[lhs]] / sum(x[[lhs]]); return(x) })
+%     agg
+% }
+% 
+% 
+% ## get random Tehsils from a province
+% village.list <- function(x, num=5, unit="Tehsil")
+% {
+%     # get list of units
+%     units <- unique(x[, unit])
+%     
+%     # sample num of those without replacement
+%     keepers <- sample(x=units, size=min(num, length(units)), replace=FALSE)
+%     
+%     return(as.character(keepers))
+% }
+% 
+% 
+% # function to make names of dist's better
+% change.names <- function(names, include=names, prefix="")
+% {
+%     theOnes <- which(!names %in% include)
+%     names[theOnes] <- sprintf("%s.%s", prefix, names[theOnes])
+%     return(names)
+% }
+% 
+% ## function to impute missing
+% impute.col <- function(col, value=0)
+% {
+%     col[is.na(col)] <- value
+%     return(col)
+% }
+% 
+% ## this compares two distributions and computes an MSE
+% compare.dist <- function(full, partial, compare="Percent", by=intersect(names(full), names(partial)))
+% {
+%     # prepend Pull onto certain names in full
+%     names(full) <- change.names(names=names(full), include=by, prefix="Full")
+%     
+%     # prepend Partial onto certain names in full
+%     names(partial) <- change.names(names=names(partial), include=by, prefix="Partial")
+%     
+%     full.compare <- sprintf("Full.%s", compare)
+%     partial.compare <- sprintf("Partial.%s", compare)
+%     
+%     # join the two together
+%     both <- join(x=full, y=partial, by=by, type="left")
+%     
+%     rm(full, partial)
+%     
+%     ## fill in any NA's with zero
+%     both[[full.compare]] <- impute.col(col=both[[full.compare]], value=0)
+%     both[[partial.compare]] <- impute.col(col=both[[partial.compare]], value=0)
+%     
+%     both$.Diff <- both[[full.compare]] - both[[partial.compare]]
+%     
+%     both$.MSE <- mean(both$.Diff^2)
+%     
+%     #attr(x=both, which="MSE") <- mean(both$.Diff^2)
+%     
+%     #aggregate(build.formula(lhs=".Diff", rhs=
+%     
+%     return(both)
+% }
+% @
+\end{document}
