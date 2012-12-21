@@ -32,6 +32,7 @@
 \pagestyle{headings}
 
 
+<<<<<<< HEAD
 <<setup-options,include=FALSE>>=
 opts_knit$set(concordance=TRUE)                     #% generate concordance
 opts_chunk$set(background='white')                 #% background color of code chunks.
@@ -70,6 +71,16 @@ options(width = 55)
 % <<smaller-dist-section,child="smallerDist/smallerDist.Rnw">>=
 % @
 
+% bulk of the book
+%\mainmatter
+% \input{distFuncs/distFuncs}
+% \input{initial/initial}
+% \input{thedata/thedata}
+% \input{overall/overall}
+% \input{smallerDist/smallerDist}
+
+%\appendix
+%\backmatter
 \cleardoublepage
 \addcontentsline{toc}{section}{\numberline{}List of Figures}
 \listoffigures

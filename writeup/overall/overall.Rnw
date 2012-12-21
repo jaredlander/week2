@@ -1,6 +1,7 @@
 % !Rnw weave = knitr
 \Sexpr{set_parent('../week2master.Rnw')}
 \Sexpr{opts_knit$set(self.contained=FALSE)}
+
 % The Data
 \section{Analyzing All Data}
 \label{sec:overall}
@@ -27,6 +28,5 @@ ricePerc <- build.dist(data=pak, lhs="New_ID", group="Province", question="RiceL
 ricePerc$Size <- "All"
 ggplot(ricePerc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
 @
-
 
 In Section~\ref{sec:smallerDist} we analyze the distribution of responses for samples of fewer Tehsils.
