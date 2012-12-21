@@ -2,6 +2,10 @@
 \Sexpr{set_parent('../week2master.Rnw')}
 \Sexpr{opts_knit$set(self.contained=FALSE)}
 
+\section{Distribution Functions}
+\label{sec:DistributionFunctions}
+These are the functions used to calculate the distribution of each answer. They are general and should workd with any question.
+
 <<load-distFuncs-r,cache=FALSE,include=FALSE>>=
 read_chunk('../../R/distFuncs.r')
 @
@@ -9,10 +13,6 @@ read_chunk('../../R/distFuncs.r')
 \section{Distribution Functions}
 \label{sec:DistributionFunctions}
 These are the functions used to calculate the distribution of each answer. They are general and should work with any question.
-
-<<thewd>>=
-getwd()
-@
 
 <<distFuncs>>=
 @
