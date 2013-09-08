@@ -1,0 +1,12 @@
+`r set_parent('../week2master.Rnw') `
+`r opts_knit$set(self.contained=FALSE) `
+
+```{r load-distFuncs-r,cache=FALSE,include=FALSE}
+read_chunk('../../R/distFuncs.r')
+```
+
+## Distribution Functions {#sec:DistributionFunctions}
+These are the functions used to calculate the distribution of each answer. They are general and should workd with any question.
+
+```{r distFuncs}
+```
