@@ -4,8 +4,6 @@
 ## Introduction {#sec:Introduction}
 Needs assessments must be carried out rapidly to be of use in responding to humanitarian emergencies. They also should accurately reflect the needs and opinions of those affected by emergencies.  Larger samples can reach a wider selection of those affected, and provide more precise estimates.  But larger samples cost more money and more time.
 
-See the section on [intro](#sec:Introduction).
-
 To date most large scale multi-cluster needs assessments have been unable to produce a report in time to contribute to decision-making about the amount and distribution of humanitarian aide.  The pursuit of large samples, then, frequently dooms such assessments to fruitlessness.
 
 Speed of data collection requires that the most efficient sample be taken.  Efficiency here is defined as the minimum effort needed to generate the most accurate information.  This effort is a combination of the distribution of the sample as well as its size.
