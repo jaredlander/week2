@@ -31,8 +31,6 @@
 % This puts the chapter name at the top of the page
 \pagestyle{headings}
 
-
-<<<<<<< HEAD
 <<setup-options,include=FALSE>>=
 opts_knit$set(concordance=TRUE)                     #% generate concordance
 opts_chunk$set(background='white')                 #% background color of code chunks.
@@ -49,6 +47,10 @@ opts_chunk$set(comment=NA, prompt=FALSE)             #% Whether to use prompts o
 options(left.brace.newline = TRUE)                  #% put the curly brace of functions on a new line where they belong
 options(width = 55)
 @
+
+% <<read-dist-chunks,cache=FALSE,include=FALSE>>=
+% read_chunk('../R/questionDistributions.r')
+% @
 
 \title{\myTitle}
 \author{Richard Garfield\\ Columbia University School of Nursing \and Jared P. Lander\\ JP Lander Consulting}
@@ -68,8 +70,8 @@ options(width = 55)
 @
 <<overall-section,child="overall/overall.Rnw">>=
 @
-% <<smaller-dist-section,child="smallerDist/smallerDist.Rnw">>=
-% @
+<<smaller-dist-section,child="smallerDist/smallerDist.Rnw">>=
+@
 
 % bulk of the book
 %\mainmatter
