@@ -71,3 +71,4 @@ compare.dist <- function(full, partial, compare="Percent", by=intersect(names(fu
     
     return(both)
 }
+
