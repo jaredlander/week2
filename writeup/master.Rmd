@@ -12,7 +12,7 @@ opts_chunk$set(cache=TRUE)                           #% cache chunks
 #opts_knit$set(self.contained=FALSE)
 opts_chunk$set(comment=NA, prompt=FALSE)             #% Whether to use prompts or comments
 options(left.brace.newline = TRUE)                  #% put the curly brace of functions on a new line where they belong
-options(width = 55)
+options(width = 70)
 ```
 
 # Generalizing from Purposive Surveys:  How large a Sample is Needed
