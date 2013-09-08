@@ -1,91 +1,94 @@
+% !Rnw weave = knitr
+\Sexpr{set_parent('../week2master.Rnw')}
+\Sexpr{opts_knit$set(self.contained=FALSE)}
+
 % smaller samples
 \section{Analyzing Smaller Samples}
 \label{sec:smallerDist}
 
-<<loaddata-smallerDist,message=FALSE,include=FALSE>>=
+<<loaddata-smallerDist,message=FALSE,include=FALSE,cache=FALSE>>=
 require(useful)
-load("C:/Users/Jared/week2/data/pakistan/pak.rdata")
-source("C:/Users/Jared/week2/R/distFuncs.r")
-ricePerc <- build.dist(data=pak, lhs="New_ID", group="Province", question="RiceLost")
-ricePerc$Size <- "All"
+require(plyr)
+load("../../data/pakistan/pak.rdata")
+source("../../R/distFuncs.r")
 @
 
-We build a similar distribution using just 5 Tehsils (max) per province as seen in Figure~\ref{fig:fiveDist} with the code here:.
-<<fiveDist,eval=FALSE>>=
+<<read-dist-chunks-smaller,cache=FALSE,include=FALSE>>=
+read_chunk('../../R/questionDistributions.r')
+@
+
+First we must build a randomized subset for each number of Tehsils per province.
+<<build-subsets>>=
+pak3 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=3, unit="Tehsil")), ]
+pak4 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=4, unit="Tehsil")), ]
 pak5 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=5, unit="Tehsil")), ]
+pak10 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=10, unit="Tehsil")), ]
+pak15 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=15, unit="Tehsil")), ]
+# convert Tehsil names to factors
+pak3$Tehsil <- factor(pak3$Tehsil)
+pak4$Tehsil <- factor(pak4$Tehsil)
 pak5$Tehsil <- factor(pak5$Tehsil)
+pak10$Tehsil <- factor(pak10$Tehsil)
+pak15$Tehsil <- factor(pak15$Tehsil)
+@
+
+\subsection{Small Rice Samples}
+\label{subsec:RiceSample}
+<<riceDist,cache=FALSE,include=FALSE>>=
+@
+We build a distribution for rice using just 5 Tehsils (max) per province as seen in Figure~\ref{fig:riceFiveDist} with the code here:
+<<riceFiveDist,fig.cap="Distribution of rice for five Tehsils per Province.",fig.scap="Distribution for five Tehsils per Province",fig.path="figures/",out.width=".9\\linewidth">>=
 rice5Perc <- build.dist(data=pak5, lhs="New_ID", group="Province", question="RiceLost")
 rice5Perc$Size <- "5"
-compare5 <- compare.dist(ricePerc, rice5Perc, by=c("Province", "RiceLost"))
-compare5$Partial.Size <- impute.col(col=compare5$Partial.Size, 5)
-ggplot(rice5Perc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
+ggplot(rice5Perc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
 @
 
-\begin{figure}[!hbt]
-<<fiveDistPlot,message=FALSE,fig.path="smallerDist/figures/",dev="png",out.width=".9\\linewidth",echo=FALSE>>=
-<<fiveDist>>
-@
-\caption{Distribution for five Tehsils per Province.\label{fig:fiveDist}}
-\end{figure}
+The same distributions for 10 and 15 samples are seen in Figures~\ref{fig:riceTenDist} and \ref{fig:riceFifteenDist} respectively.  This time, for brevity, the code will not be displayed.
 
-The same distributions for 10 and 15 samples are seen in Figures~\ref{fig:tenDist} and \ref{fig:fifteenDist} respectively.  This time, for brevity, the code will not be displayed.
-
-\begin{figure}[!hbt]
-<<tenDist,dependson='loaddata',message=FALSE,fig.path="smallerDist/figures/",dev="png",out.width=".9\\linewidth",cache=TRUE,echo=FALSE>>=
-pak10 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=10, unit="Tehsil")), ]
-pak10$Tehsil <- factor(pak10$Tehsil)
+<<riceTenDist,fig.path="figures/",out.width=".9\\linewidth",echo=FALSE,fig.cap="Distribution of rice for 10 Tehsils per Province.",fig.scap="Distribution of rice for 10 Tehsils per Province.">>=
 rice10Perc <- build.dist(data=pak10, lhs="New_ID", group="Province", question="RiceLost")
 rice10Perc$Size <- "10"
-compare10 <- compare.dist(ricePerc, rice10Perc, by=c("Province", "RiceLost"))
-compare10$Partial.Size <- impute.col(col=compare10$Partial.Size, 10)
 ggplot(rice10Perc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
 @
-\caption{Distribution for ten Tehsil per Province.\label{fig:tenDist}}
-\end{figure}
 
-\begin{figure}[!hbtp]
-<<fifteenDist,dependson='loaddata',message=FALSE,fig.path="smallerDist/figures/",dev="png",out.width=".9\\linewidth",cache=TRUE,echo=FALSE>>=
-pak15 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=15, unit="Tehsil")), ]
-pak15$Tehsil <- factor(pak15$Tehsil)
+<<riceFifteenDist,fig.path="figures/",dev="png",out.width=".9\\linewidth",echo=FALSE,fig.cap="Distribution of rice for 15 Tehsils per Province.",fig.scap="Distribution of rice for 15 Tehsils per Province.">>=
 rice15Perc <- build.dist(data=pak15, lhs="New_ID", group="Province", question="RiceLost")
 rice15Perc$Size <- "15"
-compare15 <- compare.dist(ricePerc, rice15Perc, by=c("Province", "RiceLost"))
-compare15$Partial.Size <- impute.col(col=compare15$Partial.Size, 15)
 ggplot(rice15Perc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
 @
-\caption{Distribution for 15 Tehsils per Province.\label{fig:fifteenDist}}
-\end{figure}
 
-Now we wish to to look at the various distributions in a single plot.  Here is the code:
-<<allDistInOne,message=FALSE,echo=TRUE,eval=FALSE>>=
+Now we wish to to look at the various distributions in a single plot seen in Figure~\ref{allRiceDistInOne}.
+<<allRiceDistInOne,fig.cap="The distribution for rice all sampling sizes in one plot.",fig.scap="The distribution for rice all sampling sizes",fig.path="figures/",out.width=".9\\linewidth">>=
 # plot distributions for all measurement sizes on same graph
 allT <- rbind(rice5Perc, rice10Perc, rice15Perc, ricePerc)
 allT$Size <- ordered(allT$Size, levels=c(5, 10, 15, "All"))
-ggplot(allT, aes(x=RiceLost, y=Percent)) + geom_bar(aes(group=Size, fill=Size), stat="identity", position="dodge") + opts(axis.text.x=theme_text(angle=90)) + facet_wrap(~Province)
+ggplot(allT, aes(x=RiceLost, y=Percent)) + geom_bar(aes(group=Size, fill=Size), stat="identity", position="dodge") + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + facet_wrap(~Province)
 @
-
-The plot is in Figure~\ref{fig:allDistInOne}.
-\begin{figure}[!hbtp]
-<<allDistInOnePlot,echo=FALSE,eval=TRUE,results='markup',dev='png',fig.path="smallerDist/figures/",out.width=".9\\linewidth">>=
-<<allDistInOne>>
-@
-\caption{The distribution for all sampling types in one plot.\label{fig:allDistInOne}}
-\end{figure}
 
 Figure~\ref{fig:distErrors} displays the error between the smaller samples and the full distribution.  The code to do so is here:
 
-<<distErrors,echo=TRUE,eval=FALSE>>=
-allC <- rbind(compare5, compare10, compare15)
+<<riceDistErrors,fig.path="figures/",out.width=".9\\linewidth",fig.cap="The difference between the true distribution and the smaller smaples for rice.  Closer to 0 is better.",fig.scap="The difference between the true distribution and the smaller smaples for rice">>=
+riceCompare5 <- compare.dist(ricePerc, rice5Perc, by=c("Province", "RiceLost"))
+riceCompare5$Partial.Size <- impute.col(col=riceCompare5$Partial.Size, 5)
+riceCompare10 <- compare.dist(ricePerc, rice10Perc, by=c("Province", "RiceLost"))
+riceCompare10$Partial.Size <- impute.col(col=riceCompare10$Partial.Size, 10)
+riceCompare15 <- compare.dist(ricePerc, rice15Perc, by=c("Province", "RiceLost"))
+riceCompare15$Partial.Size <- impute.col(col=riceCompare15$Partial.Size, 15)
+allC <- rbind(riceCompare5, riceCompare10, riceCompare15)
 allC$Partial.Size <- ordered(allC$Partial.Size, levels=c(5, 10, 15))
 allC$Province <- factor(allC$Province)
-ggplot(allC, aes(x=RiceLost, y=.Diff)) + geom_line(aes(fill=Province, colour=Province, group=Province)) + opts(axis.text.x=theme_text(angle=90)) + facet_wrap(~Partial.Size) + geom_hline(yintercept=0, colour="grey", linetype=2)
+ggplot(allC, aes(x=RiceLost, y=.Diff)) + geom_line(aes(fill=Province, colour=Province, group=Province)) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + facet_wrap(~Partial.Size) + geom_hline(yintercept=0, colour="grey", linetype=2)
 @
 
-\begin{figure}[!hbtp]
-<<distErrorsPlot,echo=FALSE,eval=TRUE,dev='png',fig.path="smallerDist/figures/",out.width=".9\\linewidth">>=
-<<distErrors>>
-@
-\caption[Distribution Differences.]{The difference between the true distribution and the smaller smaples.\label{fig:distErrors}}
-\end{figure}
+% now calculate the numbers in a table
+% analyze without the province with only 5 tehsils anyway (GB)
+allC[, c("RiceLost", ".Diff")]
 
-Closing text.
+
+\subsection{Small Water Samples}
+\label{subsec:WaterSample}
+Water!
+
+\subsection{Small Accomodation Samples}
+\label{subsec:AccomodationSample}
+Accomodation!1

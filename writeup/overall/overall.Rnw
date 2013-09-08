@@ -9,6 +9,10 @@ Here we analyze all of the data.
 
 First we load the data and view a portion of it. Some more details.
 
+<<read-dist-chunks,cache=FALSE,include=FALSE>>=
+read_chunk('../../R/questionDistributions.r')
+@
+
 These are the necessary packages.
 <<overall-packages,cache=FALSE>>=
 require(useful)
@@ -22,11 +26,30 @@ source("../../R/distFuncs.r")
 corner(pak, c=15)
 @
 
-Now we build a distribution for all the data and visualize it in Figure~\ref{fig:overallDist} with the code here:.
-<<overallDist,fig.path="figures/",fig.cap="Graphical view of the distribution of responses for all the data.",fig.scap="Graphical view of the distribution of responses for all the data",out.width=".8\\linewidth">>=
-ricePerc <- build.dist(data=pak, lhs="New_ID", group="Province", question="RiceLost")
-ricePerc$Size <- "All"
-ggplot(ricePerc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + opts(axis.text.x=theme_text(angle=90))
+Now we build a distribution for all the data about rice and visualize it in Figure~\ref{fig:overallDistRice} with the code here:
+<<riceDist,echo=TRUE,cache=FALSE>>=
+@
+
+<<overallDistRice,fig.path="figures/",fig.cap="Graphical view of the distribution of responses about rice for all the data.",fig.scap="Graphical view of the distribution of responses about rice for all the data",out.width=".8\\linewidth">>=
+ggplot(ricePerc, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+@
+
+Similar calculation for stagnant water graphed in Figure~\ref{fig:overallDistWater}.
+<<waterDist,echo=TRUE,cache=FALSE>>=
+@
+<<overallDistWater,fig.path="figures/",fig.cap="Graphical view of the distribution of responses about stagnant water for all the data.",fig.scap="Graphical view of the distribution of responses about stagnant water for all the data",out.width=".8\\linewidth">>=
+ggplot(water, aes(x=StagnantWater, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+@
+
+And lastly the similar calculation for accomodation graphed in Figure~\ref{fig:overallDistAccomodation}.
+<<accomodationDist,echo=TRUE,cache=FALSE>>=
+@
+<<overallDistAccomodation,fig.path="figures/",fig.cap="Graphical view of the distribution of responses about Accommodation for all the data.",fig.scap="Graphical view of the distribution of responses about Accommodation for all the data",out.width=".8\\linewidth">>=
+# change some names
+accommodation$Accommodation <- as.character(accommodation$Accommodation)
+accommodation$Accommodation[accommodation$Accommodation== "Collective centers (school/Public building)"] <- "Collective Centers"
+accommodation$Accommodation[accommodation$Accommodation== "On the site of the house (Damaged)"] <- "Site of House"
+ggplot(accommodation, aes(x=Accommodation, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
 @
 
 In Section~\ref{sec:smallerDist} we analyze the distribution of responses for samples of fewer Tehsils.
