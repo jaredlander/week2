@@ -1,7 +1,7 @@
 Pakistan:
-Question BI6
-WS23
-LA6
+Question BI6 - Accomodation
+WS23 - Stagnant Water
+LA6 - Rice Lost
 
 Myanmar:
 32
