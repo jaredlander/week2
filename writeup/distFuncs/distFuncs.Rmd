@@ -6,7 +6,8 @@ read_chunk('../../R/distFuncs.r')
 ```
 
 ## Distribution Functions {#sec:DistributionFunctions}
-These are the functions used to calculate the distribution of each answer. They are general and should workd with any question.
+These are the functions used to calculate the distribution of each answer. They are general and should work with any question.
 
-```{r distFuncs}
+This function is used for calculating the percentages for any given question.
+```{r distFunc}
 ```
