@@ -1,18 +1,48 @@
-## @knitr distFuncs
-# Distribution functions
+## @knitr needPackages
 require(useful)
 require(plyr)
-## builds the distribution for a given question
-build.dist <- function(data, lhs, group, question)
-{
-    theFormula <- build.formula(lhs=lhs, rhs=c(group, question))
-    agg <- aggregate(theFormula, data, length)
-    agg <- ddply(agg, .variables=group, .fun=function(x){ x$Percent <- x[[lhs]] / sum(x[[lhs]]); return(x) })
+
+## @knitr distFunc
+# Distribution functions
+
+#' @title build.dist
+#' @description builds the distribution for a given question
+#' @author Jared P. Lander
+#' @param data data.frame containing information of interest
+#' @param group Variable by which to break up the data
+#' @param question Question to calculate on
+#' @param na.rm If TRUE NA values of question will be removed before calculation
+#' @return Data.frame enumerating the group, the question, the count for each and the percent
+#' @import plyr
+#' @examples
+#' load("data/pakistan/pak.rdata")
+#' rice1 <- build.dist(pak, group="Province", question="RiceLost", na.rm=TRUE)
+#' rice2 <- build.dist(pak, group="Province", question="RiceLost", na.rm=FALSE)
+build.dist <- function(data, group, question, na.rm=FALSE)
+{    
+    # first remove NAs if requested
+    if(na.rm)
+    {
+        data <- data[!is.na(data[, question]), ]
+    }
+    
+    # get row counts for each combination of group and question
+    agg <- ddply(data, .variables=c(group, question), NROW)
+    # give the returned column a good name
+    agg <- rename(agg, c(V1="Count"))
+    # create a new column to hold percents
+    agg$Percent <- NA
+    
+    # calculate the percents
+    # count divided by total count for that group
+    agg <- ddply(agg, group, function(x){ x$Percent <-  x$Count / sum(x$Count); return(x)} )
     agg
 }
 
 
 ## get random tehsils from a province
+#' @title village.list
+#' @description
 village.list <- function(x, num=5, unit="Tehsil")
 {
     # get list of units
