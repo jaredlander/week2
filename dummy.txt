@@ -1,0 +1,3 @@
+hi, there
+this is a second line
+note that I have to use >> to append to a file so that I do not overwrite the previous content
