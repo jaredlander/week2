@@ -1,13 +1,16 @@
-`r set_parent('../master.Rmd')`
-`r opts_knit$set(self.contained=FALSE)`
+```{r intro-options,include=FALSE}
+set_parent('../master.Rmd')
+opts_knit$set(self.contained=FALSE)
+```
 
-## Introduction {#sec:Introduction}
+## Introduction
+\label{sec:Introduction}  
 Needs assessments must be carried out rapidly to be of use in responding to humanitarian emergencies. They also should accurately reflect the needs and opinions of those affected by emergencies.  Larger samples can reach a wider selection of those affected, and provide more precise estimates.  But larger samples cost more money and more time.
 
 To date most large scale multi-cluster needs assessments have been unable to produce a report in time to contribute to decision-making about the amount and distribution of humanitarian aide.  The pursuit of large samples, then, frequently dooms such assessments to fruitlessness.
 
 Speed of data collection requires that the most efficient sample be taken.  Efficiency here is defined as the minimum effort needed to generate the most accurate information.  This effort is a combination of the distribution of the sample as well as its size.
 
-Criteria to determine the needed size of a random sample are well established.  When randomness cannot be assured, and when even the effected population is not well defined, criteria for sample size selection are not as clear. In practice, major disaster needs assessments have taken as large a sample as funding and logistics made possible.  This included 3,000 household surveys in Myanmar^[Tripartite Core Group. Post-Nargis Joint Assessment, Annex 1. July 2008, Jakarta: Indonesia. accessed   http://www.scribd.com/doc/51527522/PONJA.] and 2000 in Haiti.^[http://www.acaps.org/img/documents/rinah-report-final-rinah-report-feb2010.pdf]
+Criteria to determine the needed size of a random sample are well established.  When randomness cannot be assured, and when even the effected population is not well defined, criteria for sample size selection are not as clear. In practice, major disaster needs assessments have taken as large a sample as funding and logistics made possible.  This included 3,000 household surveys in Myanmar^[Tripartite Core Group. Post-Nargis Joint Assessment, Annex 1. July 2008, Jakarta: Indonesia. accessed http://www.scribd.com/doc/51527522/PONJA.] and 2000 in Haiti.^[http://www.acaps.org/img/documents/rinah-report-final-rinah-report-feb2010.pdf]
 
-Here we compare the results of __ quantitative indicators from the entire sample of that household surveys to smaller samples to determine an optimal sampling strategy for similar events in the future.
+Here we compare the results of three quantitative indicators from the entire sample of that household surveys to smaller samples to determine an optimal sampling strategy for similar events in the future.
