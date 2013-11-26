@@ -1,9 +1,12 @@
 `r set_parent('../master.Rmd')`
 `r opts_knit$set(self.contained=FALSE)`
 
-## Methods ## {#sec:Methods}
+## Methods
+\label{sec:Methods}  
 Data used here are taken from the multi-cluster rapid humanitarian needs assessment carried out as large scale monsoon-caused floods inundated one-fifth of the country’s landmass, affecting 20 million people^[http://www.acaps.org/img/documents/mcram-report-121010-mcram-assessment-report.pdf]. The survey was conducted in 4 of the 5 affected provinces, reaching 2,442 households, in 53 tehsils, in 27 of what were believed to be 47 affected districts.^[A month later, government registered a total of 78 affected districts.]
 
-Survey sites were chosen from a preliminary list of affected but accessible tehsils (districts) provided by the WFP 3 weeks after the rains began. When the survey team reached the tehsil, they chose 1-3 villages which could be reached within 2 hours to sample. Upon reaching the village, 5-10 households were to be chosen at random to interview.  The rapidly changing nature of the disaster meant that many people were “on the move” during the survey. People then were sampled in the selected areas in or near their homes, living with host families, in camps or spontaneous settlements along the road. Because the floods evolved in different time periods in different provinces, the distribution and conditions of affected people varied a great deal.  Survey fieldwork was carried out over 5 of the 20 days utilized for the assessment.
+Survey sites were chosen from a preliminary list of affected but accessible tehsils (districts) provided by the WFP 3 weeks after the rains began. When the survey team reached the tehsil, they chose 1-3 villages which could be reached within 2 hours to sample. Upon reaching the village, 5-10 households were to be chosen at random to interview.  The rapidly changing nature of the disaster meant that many people were ``on the move'' during the survey. People then were sampled in the selected areas in or near their homes, living with host families, in camps or spontaneous settlements along the road. Because the floods evolved in different time periods in different provinces, the distribution and conditions of affected people varied a great deal.  Survey fieldwork was carried out over 5 of the 20 days utilized for the assessment.
 
-We summarize data from 5 critical questions asked of heads of households in all 2442 sample forms.   We then looked at a randomly selected subsample of tehsils included in the survey.  The level of variation between the entire sample and subsamples of 3-15 tehsils per province were examined. Because only 5 tehsils were reached in the  Gilgit Baltistan province, these were excluded from analysis.
+We summarize data from 5 critical questions asked of heads of households in all 2,442 sample forms.   We then looked at a randomly selected subsample of tehsils included in the survey.  The level of variation between the entire sample and subsamples of 3-15 tehsils per province were examined. Because only 5 tehsils were reached in the  Gilgit Baltistan province, these were excluded from analysis.
+
+See [Methods]
