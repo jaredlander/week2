@@ -40,9 +40,13 @@ build.dist <- function(data, group, question, na.rm=FALSE)
 }
 
 
-## get random tehsils from a province
 #' @title village.list
-#' @description
+#' @description Randomly chooses units from a larger political unit
+#' @author Jared P. Lander
+#' @param x Data.frame holding names of villages and other political units
+#' @param num Number of units to select in each political unit
+#' @param unit The type of unit to be chosen
+#' @return Vector of units
 village.list <- function(x, num=5, unit="Tehsil")
 {
     # get list of units
@@ -63,20 +67,33 @@ change.names <- function(names, include=names, prefix="")
     return(names)
 }
 
-## function to impute missing
+
+#' @title impute.col
+#' @description Function to impute missing data
+#' @author Jared P. Lander
+#' @param col Variable of interest
+#' @param value Value to impute missing data with
+#' @return Vector with missing data imputed by value
 impute.col <- function(col, value=0)
 {
     col[is.na(col)] <- value
     return(col)
 }
 
-## this compares two distributions and computes an MSE
+
+#' @title compare.dist
+#' @description This compares two distributions and computes an MSE
+#' @author Jared P. Lander
+#' @param full data.frame of analysis for the full data
+#' @param partial data.frame of analysis for the partial data
+#' @param compare Unused
+#' @param by Column name to join full and partial
 compare.dist <- function(full, partial, compare="Percent", by=intersect(names(full), names(partial)))
 {
-    # prepend Pull onto certain names in full
+    # prepend Full onto certain names in full
     names(full) <- change.names(names=names(full), include=by, prefix="Full")
     
-    # prepend Partial onto certain names in full
+    # prepend Partial onto certain names in partial
     names(partial) <- change.names(names=names(partial), include=by, prefix="Partial")
     
     full.compare <- sprintf("Full.%s", compare)
