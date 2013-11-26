@@ -78,4 +78,4 @@ accomodation10$Size <- "10"
 accomodation15 <- build.dist(data=pak15, group="Province", question="Accommodation")
 accomodation15$Size <- "15"
 accomodation20 <- build.dist(data=pak20, group="Province", question="Accommodation")
-accomodationDist20$Size <- "20"
+accomodation20$Size <- "20"
