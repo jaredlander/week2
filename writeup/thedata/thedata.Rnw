@@ -20,7 +20,7 @@ It surveyed affected villages in GB, KPK, Punjab and Sindh.
 The distribution of villages within Tehsils within Provinces is seen in Figure~\ref{fig:VillDist}.
 
 <<VillDist,fig=TRUE,echo=TRUE,fig.path="figures/",out.width='.9\\linewidth',fig.cap="Distribution of villages within Tehsils within the four Provinces.",fig.scap="Distribution of villages within Tehsils">>=
-ggplot(vills, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + opts(axis.text.x=theme_text(angle=270, hjust=0)) + facet_wrap(~Province, scales="free_x")
+ggplot(vills, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + theme(axis.text.x=element_text(angle=270, hjust=0, vjust=.5)) + facet_wrap(~Province, scales="free_x")
 @
 
 The analysis begins in Section~\ref{sec:overall}.
