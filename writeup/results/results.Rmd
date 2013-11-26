@@ -1,0 +1,52 @@
+```{r results-globalSettings,include=FALSE,cache=FALSE}
+read_chunk('../../R/globalSettings.r')
+read_chunk('../../R/questionDistributions.r')
+read_chunk('../../R/distFuncs.r')
+read_chunk('../../R/loadData.r')
+```
+```{r globalSettings,include=FALSE}
+```
+```{r distFunc,include=FALSE}
+```
+```{r needPackages,include=FALSE}
+```
+```{r loadData,include=FALSE}
+```
+
+## Results
+
+### Entire Data
+First we check the distribution of the pertinent questions when calculated on the entire data.
+
+#### Rice
+```{r riceDist,dependson=c('needPackages', 'distFunc', 'loadData')}
+```
+```{r results-rice-head}
+rice
+```
+
+#### Water
+```{r waterDist,dependson=c('needPackages', 'distFunc', 'loadData')}
+```
+```{r results-water-head}
+water
+```
+
+#### Accomodation
+```{r accomodationDist,dependson=c('needPackages', 'distFunc', 'loadData')}
+```
+```{r results-accommodation-head}
+accommodation
+```
+
+### Sampled Data
+Now we sample the data, taking samples of size 3, 4, 5, 10, 15 and 20 tehsils and build similar distributions.
+
+First we set the seed to ensure reproducibility.
+```{r setSeedForSampling,results='hide'}
+```
+
+Now we build the sampled datasets.
+```{r buildSampledData}
+```
+
