@@ -24,6 +24,8 @@ First we check the distribution of the pertinent questions when calculated on th
 ```{r results-rice-head}
 rice
 ```
+```{r ricePlot}
+```
 
 #### Water
 ```{r waterDist,dependson=c('needPackages', 'distFunc', 'loadData')}
@@ -31,12 +33,16 @@ rice
 ```{r results-water-head}
 water
 ```
+```{r waterPlot}
+```
 
 #### Accomodation
 ```{r accomodationDist,dependson=c('needPackages', 'distFunc', 'loadData')}
 ```
 ```{r results-accommodation-head}
 accommodation
+```
+```{r accommodationPlot}
 ```
 
 ### Sampled Data
@@ -50,3 +56,18 @@ Now we build the sampled datasets.
 ```{r buildSampledData}
 ```
 
+And then build distributions for each of the questions for each of the sampling sizes.
+#### Rice
+```{r sampledRiceDist}
+```
+
+#### Water
+```{r sampledWaterDist}
+```
+
+#### Accommodation
+```{r sampledAccommodationDist}
+```
+
+### Compare the results
+Build comparisons of each distribution with the whole sample.
