@@ -6,7 +6,7 @@ rice$Size <- "All"
 water <- build.dist(data=pak, group="Province", question="StagnantWater")
 water$Size <- "All"
 
-## @knitr accomodationDist
+## @knitr accommodationDist
 accommodation <- build.dist(data=pak, group="Province", question="Accommodation")
 accommodation$Size <- "All"
 
@@ -39,7 +39,7 @@ pak20 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=villa
 
 
 ## @knitr sampledRiceDist
-rice3 <- build.dist(data=pak3, group="Province", question="RiceLost")
+rice3 <- build.dist(data=pak3, group="Province", question="RiceLost", full.answers=unique(pak$RiceLost))
 rice3$Size <- "3"
 rice4 <- build.dist(data=pak4, group="Province", question="RiceLost")
 rice4$Size <- "4"
@@ -67,15 +67,43 @@ water20 <- build.dist(data=pak20, group="Province", question="StagnantWater")
 water20$Size <- "20"
 
 ## @knitr sampledAccommodationDist
-accomodation3 <- build.dist(data=pak3, group="Province", question="Accommodation")
-accomodation3$Size <- "3"
-accomodation4 <- build.dist(data=pak4, group="Province", question="Accommodation")
-accomodation4$Size <- "4"
-accomodation5 <- build.dist(data=pak5, group="Province", question="Accommodation")
-accomodation5$Size <- "5"
-accomodation10 <- build.dist(data=pak10, group="Province", question="Accommodation")
-accomodation10$Size <- "10"
-accomodation15 <- build.dist(data=pak15, group="Province", question="Accommodation")
-accomodation15$Size <- "15"
-accomodation20 <- build.dist(data=pak20, group="Province", question="Accommodation")
-accomodation20$Size <- "20"
+accommodation3 <- build.dist(data=pak3, group="Province", question="Accommodation")
+accommodation3$Size <- "3"
+accommodation4 <- build.dist(data=pak4, group="Province", question="Accommodation")
+accommodation4$Size <- "4"
+accommodation5 <- build.dist(data=pak5, group="Province", question="Accommodation")
+accommodation5$Size <- "5"
+accommodation10 <- build.dist(data=pak10, group="Province", question="Accommodation")
+accommodation10$Size <- "10"
+accommodation15 <- build.dist(data=pak15, group="Province", question="Accommodation")
+accommodation15$Size <- "15"
+accommodation20 <- build.dist(data=pak20, group="Province", question="Accommodation")
+accommodation20$Size <- "20"
+
+## @knitr plotAllRice
+riceAll <- rbind(rice, rice3, rice4, rice5, rice10, rice15, rice20)
+riceAll$Size <- factor(x=riceAll$Size, levels=c("3", "4", "5", "10", "15", "20", "All"))
+ggplot(riceAll, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity", aes(color=Size, fill=Size), position=position_dodge()) + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Rice Lost")
+
+## @knitr plotAllWater
+waterAll <- rbind(water, water3, water4, water5, water10, water15, water20)
+waterAll$Size <- factor(x=waterAll$Size, levels=c("3", "4", "5", "10", "15", "20", "All"))
+ggplot(waterAll, aes(x=StagnantWater, y=Percent)) + geom_bar(stat="identity", aes(color=Size, fill=Size), position=position_dodge()) + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Stagnant Water")
+
+## @knitr plotAllAccommodation
+accommodationAll <- rbind(accommodation, accommodation3, accommodation4, accommodation5, accommodation10, accommodation15, accommodation20)
+accommodationAll$Size <- factor(x=accommodationAll$Size, levels=c("3", "4", "5", "10", "15", "20", "All"))
+ggplot(accommodationAll, aes(x=Accommodation, y=Percent)) + geom_bar(stat="identity", aes(color=Size, fill=Size), position=position_dodge()) + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Accommodation")
+
+## @knitr compareRice
+head(rice)
+head(riceAll)
+tail(riceAll)
+riceCast <- dcast(data=riceAll, formula=Province + RiceLost ~ Size, value.var="Percent")
+head(riceCast, 10)
+View(rice3[rice3$Size == "3", ])
+
+calculate.error <- function(data, total.col, cols, loss=function(true, sampled){})
+{
+    
+}
