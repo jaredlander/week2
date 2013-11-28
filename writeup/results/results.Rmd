@@ -37,7 +37,7 @@ water
 ```
 
 #### Accomodation
-```{r accomodationDist,dependson=c('needPackages', 'distFunc', 'loadData')}
+```{r accommodationDist,dependson=c('needPackages', 'distFunc', 'loadData')}
 ```
 ```{r results-accommodation-head}
 accommodation
@@ -69,5 +69,19 @@ And then build distributions for each of the questions for each of the sampling 
 ```{r sampledAccommodationDist}
 ```
 
-### Compare the results
-Build comparisons of each distribution with the whole sample.
+### Compare the Results Visually
+Visually we can see the results.
+
+#### Rice
+```{r plotAllRice}
+```
+
+#### Water
+```{r plotAllWater}
+```
+
+#### Accommodation
+```{r plotAllAccommodation}
+```
+
+### Accuracy
