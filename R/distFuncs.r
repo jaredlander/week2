@@ -1,6 +1,7 @@
 ## @knitr needPackages
 require(useful)
 require(plyr)
+require(reshape2)
 
 ## @knitr distFunc
 # Distribution functions
@@ -18,7 +19,7 @@ require(plyr)
 #' load("data/pakistan/pak.rdata")
 #' rice1 <- build.dist(pak, group="Province", question="RiceLost", na.rm=TRUE)
 #' rice2 <- build.dist(pak, group="Province", question="RiceLost", na.rm=FALSE)
-build.dist <- function(data, group, question, na.rm=FALSE)
+build.dist <- function(data, group, question, na.rm=FALSE, full.answers=unique(data[, question]), full.group=unique(data[, group]))
 {    
     # first remove NAs if requested
     if(na.rm)
@@ -36,6 +37,16 @@ build.dist <- function(data, group, question, na.rm=FALSE)
     # calculate the percents
     # count divided by total count for that group
     agg <- ddply(agg, group, function(x){ x$Percent <-  x$Count / sum(x$Count); return(x)} )
+    
+    ## build in a step that fills in missing levels
+    # build a data.frame holding the possible answers
+    allOpts <- expand.grid(full.group, full.answers)
+    # make sure it has the appropriate name
+    names(allOpts) <- c(group, question)
+    # join the tables together, leaving NA's for the empties
+    agg <- join(allOpts, agg, by=c(group, question), type="full")
+    # replace NA's with 0
+    agg$Count <- impute.col(col=agg$Count, value=0)
     agg
 }
 
