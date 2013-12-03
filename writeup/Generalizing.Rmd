@@ -20,7 +20,7 @@ options(width = 70)
 numIndicators <- 5
 ```
 
-# Generalizing from Purposive Surveys:  How large a Sample is Needed
+# Generalizing from Purposive Surveys:  How Large a Sample is Needed
 
 Jared P. Lander, Lander Analytics and Adjunct Professor, Columbia University  
 Richard Garfield, CDC and Professor, Columbia University  
