@@ -1,109 +1,112 @@
 ## @knitr riceDist
-rice <- build.dist(data=pak, group="Province", question="RiceLost")
-rice$Size <- "All"
+riceAll <- build.dist(data=pak, group="Province", question="RiceLost", label="All")
 
 ## @knitr waterDist
-water <- build.dist(data=pak, group="Province", question="StagnantWater")
-water$Size <- "All"
+waterAll <- build.dist(data=pak, group="Province", question="StagnantWater", label="All")
 
 ## @knitr accommodationDist
-accommodation <- build.dist(data=pak, group="Province", question="Accommodation")
-accommodation$Size <- "All"
+accommodationAll <- build.dist(data=pak, group="Province", question="Accommodation", label="All")
 
 ## @knitr ricePlot
-ggplot(rice, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Rice Lost")
+ggplot(riceAll, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Rice Lost")
 
 ## @knitr waterPlot
-ggplot(water, aes(x=StagnantWater, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Stagnant Water")
+ggplot(waterAll, aes(x=StagnantWater, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Stagnant Water")
 
 ## @knitr accommodationPlot
-ggplot(accommodation, aes(x=Accommodation, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Accommodation")
+ggplot(accommodationAll, aes(x=Accommodation, y=Percent)) + geom_bar(stat="identity") + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Accommodation")
 
 ## @knitr setSeedForSampling
 set.seed(26734761)
 
 ## @knitr sampleSizes
 sampleSizes <- c(3, 4, 5, 10, 15, 20)
+sampleNames <- c(sampleSizes, "All")
 
 ## @knitr elegantSampling
 alply(sampleSizes, .margins=1, function(x){unlist(dlply(pak, .variables="Province", .fun=village.list, num=x, unit="Tehsil"))})
 
 ## @knitr buildSampledData
-# Choose samples of 3, 4, 5, 10, 15 and 20 tehsils in each province
-pak3 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=3, unit="Tehsil")), ]
-pak4 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=4, unit="Tehsil")), ]
-pak5 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=5, unit="Tehsil")), ]
-pak10 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=10, unit="Tehsil")), ]
-pak15 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=15, unit="Tehsil")), ]
-pak20 <- pak[pak$Tehsil %in% unlist(dlply(pak, .variables="Province", .fun=village.list, num=20, unit="Tehsil")), ]
-
+# Choose samples of sampleSizes tehsils in each province
+for(a in sampleSizes)
+{
+    assign(x=sprintf("pak%s", a), value=cut.down.data(data=pak, num=a, unit="Tehsil", group="Province"))
+}
 
 ## @knitr sampledRiceDist
-rice3 <- build.dist(data=pak3, group="Province", question="RiceLost", full.answers=unique(pak$RiceLost))
-rice3$Size <- "3"
-rice4 <- build.dist(data=pak4, group="Province", question="RiceLost")
-rice4$Size <- "4"
-rice5 <- build.dist(data=pak5, group="Province", question="RiceLost")
-rice5$Size <- "5"
-rice10 <- build.dist(data=pak10, group="Province", question="RiceLost")
-rice10$Size <- "10"
-rice15 <- build.dist(data=pak15, group="Province", question="RiceLost")
-rice15$Size <- "15"
-rice20 <- build.dist(data=pak20, group="Province", question="RiceLost")
-rice20$Size <- "20"
+for(a in sampleSizes)
+{
+    assign(x=sprintf("rice%s", a), value=build.dist(data=eval(parse(text=sprintf("pak%s", a))), group="Province", question="RiceLost", full.answers=unique(pak$RiceLost), label=a))
+}
 
 ## @knitr sampledWaterDist
-water3 <- build.dist(data=pak3, group="Province", question="StagnantWater")
-water3$Size <- "3"
-water4 <- build.dist(data=pak4, group="Province", question="StagnantWater")
-water4$Size <- "4"
-water5 <- build.dist(data=pak5, group="Province", question="StagnantWater")
-water5$Size <- "5"
-water10 <- build.dist(data=pak10, group="Province", question="StagnantWater")
-water10$Size <- "10"
-water15 <- build.dist(data=pak15, group="Province", question="StagnantWater")
-water15$Size <- "15"
-water20 <- build.dist(data=pak20, group="Province", question="StagnantWater")
-water20$Size <- "20"
+for(a in sampleSizes)
+{
+    assign(x=sprintf("water%s", a), value=build.dist(data=eval(parse(text=sprintf("pak%s", a))), group="Province", question="StagnantWater", full.answers=unique(pak$StagnantWater), label=a))
+}
 
 ## @knitr sampledAccommodationDist
-accommodation3 <- build.dist(data=pak3, group="Province", question="Accommodation")
-accommodation3$Size <- "3"
-accommodation4 <- build.dist(data=pak4, group="Province", question="Accommodation")
-accommodation4$Size <- "4"
-accommodation5 <- build.dist(data=pak5, group="Province", question="Accommodation")
-accommodation5$Size <- "5"
-accommodation10 <- build.dist(data=pak10, group="Province", question="Accommodation")
-accommodation10$Size <- "10"
-accommodation15 <- build.dist(data=pak15, group="Province", question="Accommodation")
-accommodation15$Size <- "15"
-accommodation20 <- build.dist(data=pak20, group="Province", question="Accommodation")
-accommodation20$Size <- "20"
+for(a in sampleSizes)
+{
+    assign(x=sprintf("accommodation%s", a), value=build.dist(data=eval(parse(text=sprintf("pak%s", a))), group="Province", question="Accommodation", full.answers=unique(pak$Accommodation), label=a))
+}
 
 ## @knitr plotAllRice
-riceAll <- rbind(rice, rice3, rice4, rice5, rice10, rice15, rice20)
-riceAll$Size <- factor(x=riceAll$Size, levels=c("3", "4", "5", "10", "15", "20", "All"))
-ggplot(riceAll, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity", aes(color=Size, fill=Size), position=position_dodge()) + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Rice Lost")
+riceList <- vector("list", length(sampleNames))
+names(riceList) <- sampleNames
+for(a in sampleNames)
+{
+    riceList[[a]] <- eval(parse(text=sprintf("rice%s", a)))
+}
+riceTotal <- Reduce(rbind, riceList)
+riceTotal$Size <- factor(x=riceTotal$Size, levels=sampleNames)
+ggplot(riceTotal, aes(x=RiceLost, y=Percent)) + geom_bar(stat="identity", aes(color=Size, fill=Size), position=position_dodge()) + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Rice Lost")
 
 ## @knitr plotAllWater
-waterAll <- rbind(water, water3, water4, water5, water10, water15, water20)
-waterAll$Size <- factor(x=waterAll$Size, levels=c("3", "4", "5", "10", "15", "20", "All"))
-ggplot(waterAll, aes(x=StagnantWater, y=Percent)) + geom_bar(stat="identity", aes(color=Size, fill=Size), position=position_dodge()) + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Stagnant Water")
+waterList <- vector("list", length(sampleNames))
+names(waterList) <- sampleNames
+for(a in sampleNames)
+{
+    waterList[[a]] <- eval(parse(text=sprintf("water%s", a)))
+}
+waterTotal <- Reduce(rbind, waterList)
+waterTotal$Size <- factor(x=waterTotal$Size, levels=sampleNames)
+ggplot(waterTotal, aes(x=StagnantWater, y=Percent)) + geom_bar(stat="identity", aes(color=Size, fill=Size), position=position_dodge()) + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Stagnant Water")
+
 
 ## @knitr plotAllAccommodation
-accommodationAll <- rbind(accommodation, accommodation3, accommodation4, accommodation5, accommodation10, accommodation15, accommodation20)
-accommodationAll$Size <- factor(x=accommodationAll$Size, levels=c("3", "4", "5", "10", "15", "20", "All"))
-ggplot(accommodationAll, aes(x=Accommodation, y=Percent)) + geom_bar(stat="identity", aes(color=Size, fill=Size), position=position_dodge()) + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Accommodation")
+accommodationList <- vector("list", length(sampleNames))
+names(accommodationList) <- sampleNames
+for(a in sampleNames)
+{
+    accommodationList[[a]] <- eval(parse(text=sprintf("accommodation%s", a)))
+}
+accommodationTotal <- Reduce(rbind, accommodationList)
+accommodationTotal$Size <- factor(x=accommodationTotal$Size, levels=sampleNames)
+ggplot(accommodationTotal, aes(x=Accommodation, y=Percent)) + geom_bar(stat="identity", aes(color=Size, fill=Size), position=position_dodge()) + facet_wrap(~Province) + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5)) + labs(x="Accommodation")
 
 ## @knitr compareRice
-head(rice)
-head(riceAll)
-tail(riceAll)
-riceCast <- dcast(data=riceAll, formula=Province + RiceLost ~ Size, value.var="Percent")
-head(riceCast, 10)
-View(rice3[rice3$Size == "3", ])
+riceMSE <- compute.mse(riceTotal, index.col=c("Province", "RiceLost"), size.col="Size", value.var="Percent", full.sample="All", sample.sizes=sampleSizes)
+riceMSE
 
-calculate.error <- function(data, total.col, cols, loss=function(true, sampled){})
-{
-    
-}
+## @knitr compareWater
+waterMSE <- compute.mse(waterTotal, index.col=c("Province", "StagnantWater"), size.col="Size", value.var="Percent", full.sample="All", sample.sizes=sampleSizes)
+waterMSE
+
+## @knitr compareAccommodation
+accommodationMSE <- compute.mse(accommodationTotal, index.col=c("Province", "Accommodation"), size.col="Size", value.var="Percent", full.sample="All", sample.sizes=sampleSizes)
+accommodationMSE
+
+## @knitr plotMSERice
+ggplot(riceMSE, aes(x=Size, y=MSE)) + geom_line(aes(group=1)) + geom_point() + ggtitle("Rice")
+
+## @knitr plotMSEWater
+ggplot(waterMSE, aes(x=Size, y=MSE)) + geom_line(aes(group=1)) + geom_point() + ggtitle("Water")
+
+## @knitr plotMSEAccommodation
+ggplot(accommodationMSE, aes(x=Size, y=MSE)) + geom_line(aes(group=1)) + geom_point() + ggtitle("Accommodation")
+
+## @knitr plotMSERiceWaterAccommodation
+allMSE <- rbind(cbind(riceMSE, Question="Rice Lost"), cbind(waterMSE, Question="Stagnant Water"), cbind(accommodationMSE, Question="Accommodation"))
+allMSE
+ggplot(allMSE, aes(x=Size, y=MSE, color=Question, group=Question)) + geom_line() + geom_point()
