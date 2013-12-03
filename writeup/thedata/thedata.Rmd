@@ -17,9 +17,9 @@ The data were collected following the floods in Pakistan in 2010. Small Changes.
 
 It surveyed affected villages in GB, KPK, Punjab and Sindh.
 
-The distribution of villages within Tehsils within Provinces is seen in the following figure..
+The distribution of villages within Tehsils within Provinces is seen in the following figure.
 
-```{r VillDist,fig=TRUE,echo=TRUE,fig.path="figures/",out.width='45%',fig.cap="Distribution of villages within Tehsils within the four Provinces.",fig.scap="Distribution of villages within Tehsils",fig.align='center'}
+```{r VillDist,fig=TRUE,echo=TRUE,fig.cap="Distribution of villages within Tehsils within the four Provinces.",fig.scap="Distribution of villages within Tehsils"}
 head(vills)
 ggplot(vills, aes(x=Tehsil)) + geom_bar(aes(y=Village), stat="identity") + theme(axis.text.x=element_text(angle=270, hjust=0, vjust=.5)) + facet_wrap(~Province, scales="free_x")
 ```
