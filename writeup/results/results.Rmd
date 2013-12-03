@@ -13,7 +13,7 @@ read_chunk('../../R/loadData.r')
 ```{r loadData,include=FALSE}
 ```
 
-## Results
+## Results \label{sec:Results}
 
 ### Entire Data
 First we check the distribution of the pertinent questions when calculated on the entire data.
@@ -21,17 +21,17 @@ First we check the distribution of the pertinent questions when calculated on th
 #### Rice
 ```{r riceDist,dependson=c('needPackages', 'distFunc', 'loadData')}
 ```
-```{r results-rice-head}
-rice
+```{r results-rice-head,dependson='riceDist'}
+riceAll
 ```
-```{r ricePlot}
+```{r ricePlot,dependson='riceDist'}
 ```
 
 #### Water
 ```{r waterDist,dependson=c('needPackages', 'distFunc', 'loadData')}
 ```
-```{r results-water-head}
-water
+```{r results-water-head,dependson='waterDist',dependson='waterDist'}
+waterAll
 ```
 ```{r waterPlot}
 ```
@@ -39,49 +39,75 @@ water
 #### Accomodation
 ```{r accommodationDist,dependson=c('needPackages', 'distFunc', 'loadData')}
 ```
-```{r results-accommodation-head}
-accommodation
+```{r results-accommodation-head,dependson='accommodationDist'}
+accommodationAll
 ```
-```{r accommodationPlot}
+```{r accommodationPlot,dependson='accommodationDist'}
 ```
 
 ### Sampled Data
 Now we sample the data, taking samples of size 3, 4, 5, 10, 15 and 20 tehsils and build similar distributions.
 
+```{r sampleSizes}
+```
+
 First we set the seed to ensure reproducibility.
-```{r setSeedForSampling,results='hide'}
+```{r setSeedForSampling,results='hide',dependson='sampleSizes'}
 ```
 
 Now we build the sampled datasets.
-```{r buildSampledData}
+```{r buildSampledData,dependson='sampleSizes'}
 ```
 
 And then build distributions for each of the questions for each of the sampling sizes.
 #### Rice
-```{r sampledRiceDist}
+```{r sampledRiceDist,dependson='buildSampledData'}
 ```
 
 #### Water
-```{r sampledWaterDist}
+```{r sampledWaterDist,dependson='buildSampledData'}
 ```
 
 #### Accommodation
-```{r sampledAccommodationDist}
+```{r sampledAccommodationDist,dependson='buildSampledData'}
 ```
 
 ### Compare the Results Visually
 Visually we can see the results.
 
 #### Rice
-```{r plotAllRice}
+```{r plotAllRice,dependson='sampledRiceDist'}
 ```
 
 #### Water
-```{r plotAllWater}
+```{r plotAllWater,dependson='sampledWaterDist'}
 ```
 
 #### Accommodation
-```{r plotAllAccommodation}
+```{r plotAllAccommodation,dependson='sampledAccommodationDist'}
 ```
 
 ### Accuracy
+We computer the numerical accuracy based on Mean Squared Error (MSE).
+
+#### Rice
+```{r compareRice,dependson='plotAllRice'}
+```
+```{r plotMSERice,dependson='compareRice'}
+```
+
+#### Water
+```{r compareWater,dependson='plotAllWater'}
+```
+```{r plotMSEWater,dependson='compareWater'}
+```
+
+#### Accommodation
+```{r compareAccommodation,dependson='plotAllAccommodation'}
+```
+```{r plotMSEAccommodation,dependson='compareAccommodation'}
+```
+
+### All the MSEs together
+```{r plotMSERiceWaterAccommodation}
+```
